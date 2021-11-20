@@ -21,6 +21,8 @@
   "homepage": "https://github.com/aditya491929/FormEasy#readme",
   "dependencies": {
     "concurrently": "^6.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0"

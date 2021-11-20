@@ -1,0 +1,34 @@
+.bannerTitle{
+    height:'500px';
+    font-size: 5em;
+    line-height: 1em;
+    display: inline;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 73%, #03ef62 73%);
+}
+
+.bannerDescp{
+    margin-top: 1.2em;
+    font-size: 1.2em;
+    width: 80%;
+}
+
+.bannerImg{
+    margin-top: -3em;
+    width: 90%;
+    height: 90%;
+}
+
+@media only screen and (max-width: 500px){
+    .bannerTitle{
+        font-size: 3em;
+    }
+
+    .bannerDescp{
+        font-size: 1em;
+        width: 80%;
+    }
+
+    .bannerImg{
+        margin-top:-7em;
+    }
+}
