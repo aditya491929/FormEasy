@@ -1,0 +1,39 @@
+.my-modal{
+    width: 35vw;
+    max-width: 35vw;
+}
+
+@media only screen and (max-width: 1200px) {
+    .my-modal{
+        width: 40vw;
+        max-width: 40vw;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .my-modal{
+        width: 50vw;
+        max-width: 50vw;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .my-modal{
+        width: 60vw;
+        max-width: 60vw;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .my-modal{
+        width: 70vw;
+        max-width: 70vw;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .my-modal{
+        width: 95vw;
+        max-width: 95vw;
+    }
+}

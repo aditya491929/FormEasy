@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import Logo from '../../logo.png'
 import classes from './MainHeader.module.css'; 
 
-const MainHeader = () => {
+const MainHeader = (props) => {
   const loginBtnClasses = `me-2 ${classes['loginBtn']}`
   return (
     <Router>
@@ -33,8 +33,8 @@ const MainHeader = () => {
             </NavDropdown> */}
             </Nav>
             <Nav>
-              <Button variant="dark" className={loginBtnClasses} size="lg">Login</Button>
-              <Button size="lg" className={classes['signUpBtn']}>SignUp</Button>
+              <Button variant="dark" className={loginBtnClasses}  onClick={props.onPress} >Login</Button>
+              <Button variant="dark"  className={classes['signUpBtn']} onClick={props.onPress} >SignUp</Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
