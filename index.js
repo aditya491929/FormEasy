@@ -10,7 +10,6 @@ if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
 require('./utils/connectdb');
-require('./strategies/JwtStrategy');
 require('./authenticate');
 
 const userRouter = require('./routes/userRoutes');
