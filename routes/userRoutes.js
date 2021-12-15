@@ -86,6 +86,12 @@ router.post("/login", (req, res) => {
             return res.send({
               message: "User Logged In Successfully!",
               token: token,
+              user: {
+                "email": dbUser.email,
+                "username": dbUser.username,
+                "fname": dbUser.fname,
+                "lname": dbUser.lname
+              },
             });
           }
         );
@@ -125,21 +131,21 @@ router.post("/verifyToken", async (req, res) => {
 });
 
 router.get("/currentUser", auth, async (req, res) => {
-  const userData = await User.findById(req.user);
+  const userData = await User.findById(req.user).select('-password');
   res.send({
     isLoggedIn: true,
-    user: {
-      fname: userData.fname,
-      lname: userData.lname,
-      username: userData.username,
-      email: userData.email,
-      date: userData.date,
-    },
+    user: userData,
   });
 });
 
-// router.get('/logout', (req,res) => {
-//   localStorage.removeItem('token');
-// })
+router.get('/logout', (req,res) => {
+  const token = req.header("x-auth-token");
+  const result = jwt.verify(token, process.env.JWT_SECRET);
+  if(result) {
+    return res.send({
+      message: true,
+    })
+  }
+})
 
 module.exports = router;

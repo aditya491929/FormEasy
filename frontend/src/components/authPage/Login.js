@@ -35,75 +35,14 @@ const Login = () => {
         user: loginResponse.data.user
       });
       localStorage.setItem('auth-token', loginResponse.data.token);
-      history.push('/home');
+      localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
+      history('/dashboard');
     } catch (err) {
+      console.log(err)
       setIsSubmitting(false);
-      err.response.data.msg && setError(err.response.data.msg)
+      setError(err)
     }
   };
-
-  // const formSubmitHandler = (event) => {
-  //   event.preventDefault();
-  //   const data = {
-  //     email: email,
-  //     password: password,
-  //   }
-  //   fetch(`${process.env.REACT_APP_API_ENDPOINT}users/login`, {
-  //     method:'POST',
-  //     headers:{
-  //       'Content-type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     localStorage.setItem('token', data.token)
-  //   })
-  // }
-
-  // useEffect(() => {
-
-  // })
-
-  // const formSubmitHandler = (event) => {
-  //   event.preventDefault();
-  //   setIsSubmitting(true);
-  //   setError("");
-    
-  //   const genericErrorMessage = "Something went wrong! Please try again later.";
-
-  //   fetch(`${process.env.REACT_APP_API_ENDPOINT}users/login`, {
-  //     mode:'cors',
-  //     method: "POST",
-  //     credentials: "include",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ username: email, password }),
-  //   })
-  //     .then(async (response) => {
-  //       setIsSubmitting(false);
-  //       if (!response.ok) {
-  //         if (response.status === 400) {
-  //           setError("Please fill all the fields correctly!");
-  //         } else if (response.status === 401) {
-  //           setError("Invalid email and password combination.");
-  //         } else {
-  //           setError(genericErrorMessage);
-  //         }
-  //       } else {
-  //         const data = await response.json();
-  //         console.log(data.token)
-  //         Cookie.set("token", data.token)
-  //         setUserContext((oldValues) => {
-  //           return { ...oldValues, token: data.token };
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setIsSubmitting(false);
-  //       setError(genericErrorMessage);
-  //     });
-  // };
 
   return (
     <>
