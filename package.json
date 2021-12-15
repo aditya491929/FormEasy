@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/aditya491929/FormEasy#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^6.3.0",
     "cookie-parser": "^1.4.6",

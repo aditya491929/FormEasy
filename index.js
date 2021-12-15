@@ -9,10 +9,9 @@ const path = require('path');
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
-require('./utils/connectdb')
-require('./strategies/JwtStrategy')
-require('./strategies/LocalStrategy')
-require('./authenticate')
+require('./utils/connectdb');
+require('./strategies/JwtStrategy');
+require('./authenticate');
 
 const userRouter = require('./routes/userRoutes');
 

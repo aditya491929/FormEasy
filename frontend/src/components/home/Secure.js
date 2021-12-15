@@ -1,75 +1,88 @@
-import React, { useCallback, useContext, useEffect } from "react";
-import MainHeader from "../navbar/MainHeader";
+import React, { useContext, useEffect } from "react";
+import {useNavigate} from 'react-router-dom';
 import { UserContext } from "../../context/UserContext";
+import MainHeader from "../navbar/MainHeader";
 import { Button } from "react-bootstrap";
 
 const Secure = () => {
-  const [userContext, setUserContext] = useContext(UserContext);
-
-  const fetchUserDetails = useCallback(() => {
-    fetch(process.env.REACT_APP_API_ENDPOINT + "users/currentUser", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userContext.token}`,
-      },
-    }).then(async (response) => {
-      if (response.ok) {
-        const data = await response.json();
-        setUserContext((oldValues) => {
-          return { ...oldValues, details: data };
-        });
-      } else {
-        if (response.status === 401) {
-          window.location.reload();
-        } else {
-          setUserContext((oldValues) => {
-            return { ...oldValues, details: null };
-          });
-        }
-      }
-    });
-  }, [setUserContext, userContext.token]);
+  const {userData} = useContext(UserContext);
+  const history = useNavigate();
 
   useEffect(() => {
-    if (!userContext.details) {
-      fetchUserDetails();
+    if(!userData.user){
+      history.push('/home');
     }
-  }, [userContext.details, fetchUserDetails]);
+  }, []);
 
-  const logoutHandler = () => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}users/logout`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userContext.token}`,
-      },
-    }).then(async (response) => {
-      setUserContext((oldValues) => {
-        return { ...oldValues, details: undefined, token: null };
-      });
-      window.localStorage.setItem("logout", Date.now());
-    });
-  };
+  // const fetchUserDetails = useCallback(() => {
+  //   console.log(userContext)
+  //   fetch(process.env.REACT_APP_API_ENDPOINT + "users/currentUser", {
+  //     mode:'cors',
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${userContext.token}`,
+  //     },
+  //   }).then(async (response) => {
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data)
+  //       setUserContext((oldValues) => {
+  //         return { ...oldValues, details: data };
+  //       });
+  //     } else {
+  //       if (response.status === 401) {
+  //         window.location.reload();
+  //       } else {
+  //         setUserContext((oldValues) => {
+  //           return { ...oldValues, details: null };
+  //         });
+  //       }
+  //     }
+  //   });
+  // }, [setUserContext, userContext.token]);
 
-  const refetchHandler = () => {
-    setUserContext((oldValues) => {
-      return { ...oldValues, details: undefined };
-    });
-  };
+  // useEffect(() => {
+  //   if (!userContext.details) {
+  //     fetchUserDetails();
+  //   }
+  // }, [userContext.details, fetchUserDetails]);
+
+  // const logoutHandler = () => {
+  //   console.log(userContext.token)
+  //   fetch(`${process.env.REACT_APP_API_ENDPOINT}users/logout`, {
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${userContext.token}`,
+  //     },
+  //   }).then(async (respo) => {
+  //     console.log(respo)
+  //     setUserContext((oldValues) => {
+  //       return { ...oldValues, details: undefined, token: null };
+  //     });
+  //     window.localStorage.setItem("logout", Date.now());
+  //   });
+  // };
+
+  // const refetchHandler = () => {
+  //   setUserContext((oldValues) => {
+  //     return { ...oldValues, details: undefined };
+  //   });
+  // };
 
   return (
     <>
       <MainHeader />
-      {userContext.details === null
+      {userData.user === null
         ? "Failed to Load User Details"
-        : `${userContext.details}`}
-      <Button onClick={logoutHandler} variant="dark">
+        : !userData.user ? 'Loading...' :`${userData.user.fname}`}
+      <Button variant="dark">
         Logout
       </Button>
-      <Button onClick={refetchHandler} variant="dark">
+      <Button  variant="dark">
         Refetch
       </Button>
     </>

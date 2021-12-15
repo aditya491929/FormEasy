@@ -14,9 +14,9 @@ const Content = () => {
           </div>
           <p className={classes["bannerDescp"]}>
             We’re more than a Form. Or a DB. Customize Form to work the way you
-            do.Create a{" "}
+            do. Create an{" "}
             <span style={{ color: "#13d461", fontWeight: "bold" }}>
-              EasyForm
+              FormEasy
             </span>{" "}
             instead and make everyone happy.
           </p>
@@ -26,7 +26,7 @@ const Content = () => {
         </Col>
         <Col
           lg={true}
-          style={{ height: "500px"}}
+          style={{ height: "500px", display: "flex", justifyContent: "center"}}
         >
           <iframe className={classes['bannerImg']} src="https://embed.lottiefiles.com/animation/8984" title="bannerImg"/>
         </Col>
