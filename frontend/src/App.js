@@ -95,7 +95,7 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={{userData, setUserData}}>
         <Routes>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" element={<Home/>} />
           <Route exact path="/dashboard" component={Secure} />
         </Routes>
       </UserContext.Provider>
