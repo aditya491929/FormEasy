@@ -6,7 +6,10 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
-import Dashboard from "./components/dashboard/dashboard";
+import Dashboard from "./components/dashboard/dashboardPage";
+import { ThemeProvider } from "@mui/material/styles";
+
+import themeRTL from "./assets/theme/theme-rtl";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -51,25 +54,27 @@ function App() {
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
-      <BrowserRouter>
-          {!userData.token ? (
-           <Routes>
-             <Route path="/" element={<Home />} />
-             <Route path="/home" element={<Navigate to='/' />} />
-             <Route path="/dashboard" element={<Navigate to='/' />}/>
-             <Route path="/*" element={<Navigate to='/' />} />
-           </Routes>
-          )
-          : (
+      <ThemeProvider theme={themeRTL}>
+        <BrowserRouter>
+            {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Secure />} />
-              <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/*" element={<h1>Error 404</h1>} />
+              <Route path="/home" element={<Navigate to='/' />} />
+              <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/*" element={<Navigate to='/' />} />
             </Routes>
-          )
-        }
-      </BrowserRouter>
+            )
+            : (
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Secure />} />
+                <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/*" element={<h1>Error 404</h1>} />
+              </Routes>
+            )
+          }
+        </BrowserRouter>
+      </ThemeProvider>
     </UserContext.Provider>
   );
 }
