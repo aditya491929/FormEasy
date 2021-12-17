@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-    fname: {
+const FormSchema = new mongoose.Schema({
+    form:[
+        {
+            url: String,
+            formName: String,
+        }
+    ],
+    userId: {
         type: String,
         default: '',
     },
-    lname: {
+    formCategory: {
         type: String,
         default: '',
     },
@@ -13,25 +19,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    email: {
+    description: {
         type: String,
         default: '',
     },
-    password: {
-        type: String,
-        default: '',
-    },
-    forms:[
-        {
-            url: String,
-            filename: String,
-        }
-    ],
     date: {
         type: Date,
         default: Date.now(),
-    }
+    },
 });
 
-const User = mongoose.model('User', UserSchema);
-module.exports = User
+const Form = mongoose.model('Form', FormSchema);
+module.exports = Form

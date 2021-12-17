@@ -5,6 +5,7 @@ import { Button, Form, Alert } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
 import NProgress from 'nprogress';
 import './nprogress.css';
+import { useToasts } from 'react-toast-notifications';
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const {setUserData} = useContext(UserContext);
   const history = useNavigate();
+  const { addToast } = useToasts();
 
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
@@ -33,19 +35,26 @@ const Login = () => {
       }
       const loginResponse = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}users/login`, loginUser);
       setIsSubmitting(false);
-      setUserData({
-        token: loginResponse.data.token,
-        user: loginResponse.data.user
-      });
-      localStorage.setItem('auth-token', loginResponse.data.token);
-      localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-      NProgress.done();
-      history('/home');
+      if (loginResponse.data.success){
+        setUserData({
+          token: loginResponse.data.token,
+          user: loginResponse.data.user
+        });
+        localStorage.setItem('auth-token', loginResponse.data.token);
+        localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
+        NProgress.done();
+        addToast(loginResponse.data.message, { appearance: 'success', autoDismiss: true, autoDismissTimeout: 2000 })
+        history('/home');
+      } else {
+        setError(loginResponse.data.message)
+        NProgress.done();
+        setEmail('')
+        setPassword('')
+      }
     } catch (err) {
       console.log(err)
       setIsSubmitting(false);
       NProgress.done();
-      setError(err)
     }
   };
 

@@ -5,6 +5,8 @@ import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
 import NProgress from 'nprogress';
 import './nprogress.css';
+import { useToasts } from 'react-toast-notifications';
+
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,6 +18,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const {setUserData} = useContext(UserContext);
   const history = useNavigate();
+  const { addToast } = useToasts();
 
   const fnameChangeHandler = (event) => {
     setFname(event.target.value);
@@ -50,24 +53,32 @@ const Register = () => {
         email,
         password,
       }
-      await axios.post(`${process.env.REACT_APP_API_ENDPOINT}users/signup`, newUser);
+      const signupResponse = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}users/signup`, newUser);
       setIsSubmitting(false);
-      const loginResponse = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}users/login`, {
-        email,
-        password
-      });
-      setUserData({
-        token: loginResponse.data.token,
-        user: loginResponse.data.user
-      });
-      localStorage.setItem('auth-token', loginResponse.data.token);
-      localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-      NProgress.done();
-      history('/home');
+      if (signupResponse.data.success){
+        const loginResponse = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}users/login`, {
+          email,
+          password
+        });
+        setUserData({
+          token: loginResponse.data.token,
+          user: loginResponse.data.user
+        });
+        localStorage.setItem('auth-token', loginResponse.data.token);
+        localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
+        NProgress.done();
+        addToast(loginResponse.data.message, { appearance: 'success', autoDismiss: true, autoDismissTimeout: 2000 })
+        history('/home');
+      } else {
+        setError(signupResponse.data.message)
+        NProgress.done();
+        setUsername('');
+        setEmail('');
+        setPassword('');
+      }
     } catch (err) {
       setIsSubmitting(false);
       NProgress.done();
-      err.response.data.msg && setError(err.response.data.msg)
     }
   };
 

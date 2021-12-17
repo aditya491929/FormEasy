@@ -9,13 +9,13 @@
 
 // // Soft UI Dashboard React icons
 import Shop from "./Icons/Shop";
-import Office from "./Icons/Office";
-import Settings from "./Icons/Settings";
-import Document from "./Icons/Document";
-import SpaceShip from "./Icons/SpaceShip";
-import CustomerSupport from "./Icons/CustomerSupport";
-import CreditCard from "./Icons/CreditCard";
-import Cube from "./Icons/Cube";
+// import Office from "./Icons/Office";
+// import Settings from "./Icons/Settings";
+// import Document from "./Icons/Document";
+// import SpaceShip from "./Icons/SpaceShip";
+// import CustomerSupport from "./Icons/CustomerSupport";
+// import CreditCard from "./Icons/CreditCard";
+// import Cube from "./Icons/Cube";
 
 const routes = [
   {

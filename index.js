@@ -10,9 +10,10 @@ if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
 require('./utils/connectdb');
-require('./authenticate');
+
 
 const userRouter = require('./routes/userRoutes');
+const userFormRouter = require('./routes/userForms');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -28,6 +29,7 @@ app.use(cors({
 app.use(passport.initialize());
 
 app.use('/users', userRouter);
+app.use('/forms', userFormRouter);
 
 app.get('/', (req,res) => {
     res.send('HOME');

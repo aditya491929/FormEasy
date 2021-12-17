@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
+import { ToastProvider } from 'react-toast-notifications';
 import axios from "axios";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -55,6 +56,7 @@ function App() {
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
       <ThemeProvider theme={themeRTL}>
+      <ToastProvider placement="top-center">
         <BrowserRouter>
             {!userData.token ? (
             <Routes>
@@ -74,6 +76,7 @@ function App() {
             )
           }
         </BrowserRouter>
+      </ToastProvider>
       </ThemeProvider>
     </UserContext.Provider>
   );

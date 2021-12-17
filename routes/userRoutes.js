@@ -3,33 +3,12 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-
-const auth = (req, res, next) => {
-  try {
-    const token = req.header("x-auth-token");
-    if (!token) {
-      return res.status(500).send({
-        message: "No Token Found!",
-      });
-    }
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) {
-      return res.status(500).send({
-        message: "Token Verification Failed!",
-      });
-    }
-    req.user = verified.id;
-    next();
-  } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
-  }
-};
+const auth = require('../middleware/auth');
 
 router.post("/signup", async (req, res) => {
   if (!req.body.fname) {
-    res.status(500).send({
+    res.send({
+      success: false,
       message: "FirstName is required!",
     });
   } else {
@@ -39,8 +18,10 @@ router.post("/signup", async (req, res) => {
 
     if (takenUsername || takenEmail) {
       return res
-        .status(500)
-        .send({ message: "Username or email has already been taken" });
+        .send({ 
+          success: false,
+          message: "Username or email has already been taken" 
+        });
     } else {
       let hashedPassword = await bcrypt.hash(password, 10);
 
@@ -52,7 +33,11 @@ router.post("/signup", async (req, res) => {
         password: hashedPassword,
       });
       const savedUser = await newUser.save();
-      res.send({ message: "User Created Successfully!", savedUser });
+      res.send({ 
+        success: true,
+        message: "User Registered Successfully!", 
+        savedUser 
+      });
     }
   }
 });
@@ -61,7 +46,8 @@ router.post("/login", (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }).then((dbUser) => {
     if (!dbUser) {
-      return res.status(500).send({
+      return res.send({
+        success: false,
         message: "Invalid Username or Password!",
       });
     }
@@ -80,10 +66,12 @@ router.post("/login", (req, res) => {
           (err, token) => {
             if (err) {
               return res.send({
+                success: false,
                 message: "error!",
               });
             }
             return res.send({
+              success: true,
               message: "User Logged In Successfully!",
               token: token,
               user: {
@@ -96,7 +84,8 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        return res.status(500).send({
+        return res.send({
+          success: false,
           message: "Invalid Username or Password!",
         });
       }
@@ -143,7 +132,8 @@ router.get('/logout', (req,res) => {
   const result = jwt.verify(token, process.env.JWT_SECRET);
   if(result) {
     return res.send({
-      message: true,
+      success: true,
+      message: 'User Logged Out Successfully!'
     })
   }
 })

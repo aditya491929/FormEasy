@@ -21,7 +21,7 @@ const Content = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
         progressStyle: {'background':'#03ef62'},
       });
     }
