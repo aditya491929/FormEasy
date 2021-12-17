@@ -6,6 +6,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
+import Dashboard from "./components/dashboard/dashboard";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -55,6 +56,7 @@ function App() {
            <Routes>
              <Route path="/" element={<Home />} />
              <Route path="/home" element={<Navigate to='/' />} />
+             <Route path="/dashboard" element={<Navigate to='/' />}/>
              <Route path="/*" element={<Navigate to='/' />} />
            </Routes>
           )
@@ -62,6 +64,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Secure />} />
+              <Route path="/dashboard" element={<Dashboard />}/>
               <Route path="/*" element={<h1>Error 404</h1>} />
             </Routes>
           )
