@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-=======
 import React, { useContext, useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import { UserContext } from "../../context/UserContext";
@@ -11,7 +9,6 @@ import { useNavController, setMiniSidenav, setOpenConfigurator } from "../../con
 import Sidenav from "../Sidenav";
 import brand from "../../assets/logo.png";
 import routes from "../../routes";
->>>>>>> a93f5d54b7ee101acb6b95e45adf9ffe29eb148b
 
 // Soft UI Dashboard React components
 import SuiBox from "../SuiBox";
