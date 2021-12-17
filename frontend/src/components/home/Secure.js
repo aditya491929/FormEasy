@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import MainHeader from "../navbar/MainHeader";
-import { Button, Form, Alert } from "react-bootstrap";
-import axios from "axios";
 
 const Secure = () => {
-  const {userData, setUserData} = useContext(UserContext);
+  const {userData} = useContext(UserContext);
   const history = useNavigate();
-
   useEffect(() => {
     console.log(userData)
     if(!userData.user){
@@ -16,35 +13,12 @@ const Secure = () => {
     }
   }, [userData, history]);
 
-  const logoutHandler = async (event) =>{
-    event.preventDefault();
-    try{
-      const logoutResponse = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}users/logout`, {
-        headers: { "x-auth-token": userData.token },
-      });
-      localStorage.removeItem('auth-token');
-      localStorage.removeItem('user');
-      if (logoutResponse.data.message){
-        setUserData({
-          token: undefined,
-          user: undefined
-        })
-        history('/');
-      }else{
-        history('/home')
-      }
-    }catch(err){
-      console.log(err);
-    }
-  }
-
   return (
     <>
-      <MainHeader logout={logoutHandler} />
+      <MainHeader />
       {userData.user === null
         ? "Failed to Load User Details"
         : !userData.user ? 'Loading...' :`Welcome,${userData.user.username}!`}
-      <Button onClick={()=>{history("/dashboard")}}>Go to Dashboard</Button>
     </>
   );
 };

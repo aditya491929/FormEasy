@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
+import { ToastProvider } from 'react-toast-notifications';
 import axios from "axios";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,25 +52,27 @@ function App() {
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
-      <BrowserRouter>
-          {!userData.token ? (
-           <Routes>
-             <Route path="/" element={<Home />} />
-             <Route path="/home" element={<Navigate to='/' />} />
-             <Route path="/dashboard" element={<Navigate to='/' />}/>
-             <Route path="/*" element={<Navigate to='/' />} />
-           </Routes>
-          )
-          : (
+      <ToastProvider placement="top-center">
+        <BrowserRouter>
+            {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Secure />} />
-              <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/*" element={<h1>Error 404</h1>} />
+              <Route path="/home" element={<Navigate to='/' />} />
+              <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/*" element={<Navigate to='/' />} />
             </Routes>
-          )
-        }
-      </BrowserRouter>
+            )
+            : (
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Secure />} />
+                <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/*" element={<h1>Error 404</h1>} />
+              </Routes>
+            )
+          }
+        </BrowserRouter>
+      </ToastProvider>
     </UserContext.Provider>
   );
 }

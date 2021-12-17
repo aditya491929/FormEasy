@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import { UserContext } from "../../context/UserContext";
-import MainHeader from "../navbar/MainHeader";
 import axios from "axios";
 import { useNavController, setMiniSidenav, setOpenConfigurator } from "../../context/NavContext";
 import Sidenav from "../Sidenav";
@@ -89,7 +88,6 @@ const Dashboard = () => {
       </ThemeProvider>
   ) : (
     <ThemeProvider theme={theme}>
-      {/* <MainHeader logout={logoutHandler} /> */}
       {layout === "dashboard" && (
         userData.user === null
         ? "Failed to Load User Details"
