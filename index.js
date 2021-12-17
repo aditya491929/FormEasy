@@ -13,6 +13,7 @@ require('./utils/connectdb');
 
 
 const userRouter = require('./routes/userRoutes');
+const userFormRouter = require('./routes/userForms');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -28,6 +29,7 @@ app.use(cors({
 app.use(passport.initialize());
 
 app.use('/users', userRouter);
+app.use('/forms', userFormRouter);
 
 app.get('/', (req,res) => {
     res.send('HOME');
