@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { Button, Form, Alert } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
+import NProgress from 'nprogress';
+import './nprogress.css';
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,6 +24,7 @@ const Login = () => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
+    NProgress.start();
     setIsSubmitting(true);
     try{
       const loginUser = {
@@ -36,10 +39,12 @@ const Login = () => {
       });
       localStorage.setItem('auth-token', loginResponse.data.token);
       localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-      history('/dashboard');
+      NProgress.done();
+      history('/home');
     } catch (err) {
       console.log(err)
       setIsSubmitting(false);
+      NProgress.done();
       setError(err)
     }
   };
