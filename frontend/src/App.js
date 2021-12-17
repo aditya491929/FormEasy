@@ -6,7 +6,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
-// import Loader from "./components/ui/Loader";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -55,14 +54,14 @@ function App() {
           {!userData.token ? (
            <Routes>
              <Route path="/" element={<Home />} />
-             <Route path="/dashboard" element={<Navigate to='/' />} />
+             <Route path="/home" element={<Navigate to='/' />} />
              <Route path="/*" element={<Navigate to='/' />} />
            </Routes>
           )
           : (
             <Routes>
-              <Route path="/" element={<Navigate to='/dashboard' />} />
-              <Route path="/dashboard" element={<Secure />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Secure />} />
               <Route path="/*" element={<h1>Error 404</h1>} />
             </Routes>
           )

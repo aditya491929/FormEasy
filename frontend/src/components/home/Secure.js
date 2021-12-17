@@ -30,7 +30,7 @@ const Secure = () => {
         })
         history('/');
       }else{
-        history('/dashboard')
+        history('/home')
       }
     }catch(err){
       console.log(err);
