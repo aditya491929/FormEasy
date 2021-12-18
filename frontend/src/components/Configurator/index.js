@@ -1,22 +1,7 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // react-github-btn
-import GitHubButton from "react-github-btn";
+// import GitHubButton from "react-github-btn";
 
 // @mui material components
 import Divider from "@mui/material/Divider";
@@ -30,24 +15,24 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
 // Soft UI Dashboard PRO React components
-import SuiBox from "components/SuiBox";
-import SuiTypography from "components/SuiTypography";
-import SuiButton from "components/SuiButton";
+import SuiBox from "../SuiBox";
+import SuiTypography from "../SuiTypography";
+import SuiButton from "../SuiButton";
 
 // Custom styles for the Configurator
-import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
+import ConfiguratorRoot from "./ConfiguratorRoot";
 
 // Soft UI Dashboard PRO React context
 import {
-  useSoftUIController,
+  useNavController,
   setOpenConfigurator,
   setTransparentSidenav,
   setFixedNavbar,
   setSidenavColor,
-} from "context";
+} from "../../context/NavContext";
 
 function Configurator() {
-  const [controller, dispatch] = useSoftUIController();
+  const [controller, dispatch] = useNavController();
   const { openConfigurator, transparentSidenav, fixedNavbar, sidenavColor } = controller;
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
@@ -228,7 +213,7 @@ function Configurator() {
           </SuiButton>
         </SuiBox>
         <SuiBox display="flex" justifyContent="center">
-          <GitHubButton
+          {/* <GitHubButton
             href="https://github.com/creativetimofficial/soft-ui-dashboard-react"
             data-icon="octicon-star"
             data-size="large"
@@ -236,7 +221,7 @@ function Configurator() {
             aria-label="Star creativetimofficial/soft-ui-dashboard-react on GitHub"
           >
             Star
-          </GitHubButton>
+          </GitHubButton> */}
         </SuiBox>
         <SuiBox mt={3} textAlign="center">
           <SuiBox mb={0.5}>

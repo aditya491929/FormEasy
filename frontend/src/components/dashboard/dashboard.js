@@ -47,7 +47,7 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's money" }}
+                title={{ text: "Health" }}
                 count="$53,000"
                 percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: "paid" }}
@@ -55,7 +55,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
+                title={{ text: "Entrance Exams" }}
                 count="2,300"
                 percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: "public" }}
@@ -63,7 +63,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
+                title={{ text: "Finance" }}
                 count="+3,462"
                 percentage={{ color: "error", text: "-2%" }}
                 icon={{ color: "info", component: "emoji_events" }}
@@ -92,7 +92,7 @@ function Dashboard() {
             </Grid>
           </Grid>
         </SuiBox>
-        <SuiBox mb={3}>
+        {/* <SuiBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={5}>
               <ReportsBarChart
@@ -127,7 +127,7 @@ function Dashboard() {
               />
             </Grid>
           </Grid>
-        </SuiBox>
+        </SuiBox> */}
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
             <Projects />

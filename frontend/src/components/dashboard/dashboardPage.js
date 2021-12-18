@@ -9,6 +9,7 @@ import brand from "../../assets/logo.png";
 import routes from "../../routes";
 
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../../assets/theme";
 import themeRTL from "../../assets/theme/theme-rtl";
 import Dashboard from "./dashboard";
@@ -73,6 +74,7 @@ const DashboardPage = () => {
   return direction === "rtl" ? (
     <ThemeProvider theme={themeRTL}>
         {/* <MainHeader logout={logoutHandler} /> */}
+      <CssBaseline/>
         {layout === "dashboard" && (
           userData.user === null
           ? "Failed to Load User Details"
@@ -92,6 +94,7 @@ const DashboardPage = () => {
   ) : (
     <ThemeProvider theme={theme}>
       {/* <MainHeader logout={logoutHandler} /> */}
+      <CssBaseline/>
       {layout === "dashboard" && (
         userData.user === null
         ? "Failed to Load User Details"

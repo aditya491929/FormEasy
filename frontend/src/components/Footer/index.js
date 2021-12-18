@@ -11,8 +11,9 @@ import SuiTypography from "../SuiTypography";
 // Soft UI Dashboard PRO React base styles
 import typography from "../../assets/theme/base/typography";
 
-function Footer({ company, links }) {
-  const { href, name } = company;
+function Footer({ aditya, aayush, rahul , links }) {
+
+
   const { size } = typography;
 
   const renderLinks = () =>
@@ -51,9 +52,19 @@ function Footer({ company, links }) {
           </Icon>
         </SuiBox>
         by
-        <Link href={href} target="_blank">
+        <Link href={aditya.href} target="_blank">
           <SuiTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
+            &nbsp;{aditya.name}&nbsp;
+          </SuiTypography>
+        </Link>,
+        <Link href={aayush.href} target="_blank">
+          <SuiTypography variant="button" fontWeight="medium">
+            &nbsp;{aayush.name}&nbsp;
+          </SuiTypography>
+        </Link>,
+        <Link href={rahul.href} target="_blank">
+          <SuiTypography variant="button" fontWeight="medium">
+            &nbsp;{rahul.name}&nbsp;
           </SuiTypography>
         </Link>
         for a better web.
@@ -83,18 +94,21 @@ function Footer({ company, links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
+  aditya: { href: "https://www.github.com/", name: "Aditya"},
+  aayush: { href: "https://www.github.com/", name: "Aayush"},
+  rahul: { href: "https://www.github.com/", name: "Rahul" },
+  
   links: [
-    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
     { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
     { href: "https://www.creative-tim.com/license", name: "License" },
   ],
 };
 
 // Typechecking props for the Footer
 Footer.propTypes = {
-  company: PropTypes.objectOf(PropTypes.string),
+  aditya: PropTypes.objectOf(PropTypes.string),
+  aayush: PropTypes.objectOf(PropTypes.string),
+  rahul: PropTypes.objectOf(PropTypes.string),
   links: PropTypes.arrayOf(PropTypes.object),
 };
 

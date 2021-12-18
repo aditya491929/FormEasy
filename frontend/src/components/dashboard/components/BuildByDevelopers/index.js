@@ -22,16 +22,15 @@ function BuildByDevelopers() {
             <SuiBox display="flex" flexDirection="column" height="100%">
               <SuiBox pt={1} mb={0.5}>
                 <SuiTypography variant="body2" color="text" fontWeight="medium">
-                  Build by developers
+                  Finance
                 </SuiTypography>
               </SuiBox>
               <SuiTypography variant="h5" fontWeight="bold" gutterBottom>
-                Soft UI Dashboard
+                Bajaj Life Insurance
               </SuiTypography>
               <SuiBox mb={6}>
                 <SuiTypography variant="body2" color="text">
-                  From colors, cards, typography to complex elements, you will find the full
-                  documentation.
+                  Rental Insurance, Health premium
                 </SuiTypography>
               </SuiBox>
               <SuiTypography

@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext} from "react";
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -21,6 +20,11 @@ import SuiInput from "../../SuiInput";
 // Soft UI Dashboard PRO React example components
 import Breadcrumbs from "../../Breadcrumbs";
 import NotificationItem from "../../Items/NotificationItem";
+
+import NProgress from "nprogress";
+import { UserContext } from "../../../context/UserContext";
+import { useToasts } from "react-toast-notifications";
+import axios from "axios";
 
 // Custom styles for DashboardNavbar
 import {
@@ -44,11 +48,49 @@ import team2 from "../../../assets/images/team-2.jpg";
 import logoSpotify from "../../../assets/images/small-logos/logo-spotify.svg";
 
 function DashboardNavbar({ absolute, light, isMini }) {
+  // const location = useLocation();
+  const { userData, setUserData } = useContext(UserContext);
+  const history = useNavigate();
+  const { addToast } = useToasts();
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useNavController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+
+  const logoutHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const logoutResponse = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}users/logout`,
+        {
+          headers: { "x-auth-token": userData.token },
+        }
+      );
+      NProgress.start();
+      if (logoutResponse.data.success) {
+        localStorage.removeItem("auth-token");
+        localStorage.removeItem("user");
+        setUserData({
+          token: undefined,
+          user: undefined,
+        });
+        NProgress.done();
+        addToast(logoutResponse.data.message, {
+          appearance: "success",
+          autoDismiss: true,
+          autoDismissTimeout: 2000,
+        });
+        history("/");
+      } else {
+        NProgress.done();
+        history("/home");
+      }
+    } catch (err) {
+      console.log(err);
+      NProgress.done();
+    }
+  };
 
   useEffect(() => {
     // Setting the navbar type
@@ -82,7 +124,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleCloseMenu = () => setOpenMenu(false);
 
   // Render the notifications menu
-  const renderMenu = () => (
+  const notificationMenu = () => (
     <Menu
       anchorEl={openMenu}
       anchorReference={null}
@@ -120,6 +162,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     </Menu>
   );
 
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -153,7 +196,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     fontWeight="medium"
                     color={light ? "white" : "dark"}
                   >
-                    Sign in
+                    {userData.user ? `${userData.user.username}` : 'Sign In'}
                   </SuiTypography>
                 </IconButton>
               </Link>
@@ -167,14 +210,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 size="small"
                 color="inherit"
                 sx={navbarIconButton}
                 onClick={handleConfiguratorOpen}
               >
                 <Icon>settings</Icon>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="small"
                 color="inherit"
@@ -186,7 +229,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
               </IconButton>
-              {renderMenu()}
+              {notificationMenu()}
             </SuiBox>
           </SuiBox>
         )}

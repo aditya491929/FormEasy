@@ -11,7 +11,7 @@
 import Shop from "./Icons/Shop";
 // import Office from "./Icons/Office";
 // import Settings from "./Icons/Settings";
-// import Document from "./Icons/Document";
+import Document from "./Icons/Document";
 // import SpaceShip from "./Icons/SpaceShip";
 // import CustomerSupport from "./Icons/CustomerSupport";
 // import CreditCard from "./Icons/CreditCard";
@@ -63,7 +63,18 @@ const routes = [
   //   component: RTL,
   //   noCollapse: true,
   // },
-  // { type: "title", title: "Account Pages", key: "account-pages" },
+  { type: "title", title: "My Forms", key: "my-forms" },
+  {
+    type: "collapse",
+    name: "Create Form",
+    key: "create",
+    route: "/create",
+    icon: <Document size="12px" />,
+    // component: Billing,
+    noCollapse: true,
+  },
+  { type: "title", title: "Profile", key: "my-profile" },
+
   // {
   //   type: "collapse",
   //   name: "Profile",

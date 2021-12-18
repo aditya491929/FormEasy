@@ -49,7 +49,7 @@ function Projects() {
       <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <SuiBox>
           <SuiTypography variant="h6" gutterBottom>
-            Projects
+            Filled Forms
           </SuiTypography>
           <SuiBox display="flex" alignItems="center" lineHeight={0}>
             <Icon
