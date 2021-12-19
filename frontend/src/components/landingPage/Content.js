@@ -3,43 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import classes from "./Content.module.css";
 import { UserContext } from "../../context/UserContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToasts } from 'react-toast-notifications';
 
 const Content = () => {
   const { userData } = useContext(UserContext);
   const history = useNavigate();
+  const { addToast } = useToasts();
+
   const onGetStartedClick = () => {
     if (userData.user) {
       history("/home");
-    } 
-    else {
-      toast("⚠️ Login/SignUp to Get Started!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        progressStyle: {'background':'#03ef62'},
-      });
+    } else {
+      addToast('Login/SignUp to Get Started!', { appearance: 'warning', autoDismiss: true, autoDismissTimeout: 2000 })
     }
   };
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Container style={{ paddingTop: "2.5em" }}>
         <Row>
           <Col lg={true} style={{ paddingTop: "0.7em" }}>
@@ -56,7 +35,7 @@ const Content = () => {
               </span>{" "}
               instead and make everyone happy.
             </p>
-            <Button onClick={onGetStartedClick} size="lg" variant="dark" style={{"zIndex" : "100"}}>
+            <Button onClick={onGetStartedClick} size="lg" variant="dark">
               Get started
             </Button>
           </Col>

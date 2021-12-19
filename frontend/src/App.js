@@ -8,6 +8,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
+import Error from "./components/error/Error";
 import Dashboard from "./components/dashboard/dashboardPage";
 import SuiBox from "./components/SuiBox";
 import Sidenav from "./components/Sidenav";
@@ -167,7 +168,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
-              <Route path="/*" element={<Navigate to='/' />} />
+              <Route path="/*" element={<Error />} />
             </Routes>
             )
             : (
@@ -175,7 +176,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
-                <Route path="/*" element={<h1>Error 404</h1>} />
+                <Route path="/*" element={<Error />} />
               </Routes>
             )
           }
@@ -199,7 +200,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
-              <Route path="/*" element={<Navigate to='/' />} />
+              <Route path="/*" element={<Error />} />
             </Routes>
             )
             : (
@@ -207,7 +208,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
-                <Route path="/*" element={<h1>Error 404</h1>} />
+                <Route path="/*" element={<Error />} />
               </Routes>
             )
           }
