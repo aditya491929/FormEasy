@@ -91,6 +91,15 @@ const routes = [
     // component: Billing,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Upload Form",
+    key: "upload",
+    route: "/upload",
+    icon: <Document size="12px" />,
+    // component: Billing,
+    noCollapse: true,
+  },
   { type: "title", title: "Profile", key: "my-profile" },
 
   // {

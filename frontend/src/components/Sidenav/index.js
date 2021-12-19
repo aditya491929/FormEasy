@@ -121,15 +121,15 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SuiTypography>
         </SuiBox>
-        <SuiBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <SuiBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />}
+        <SuiBox component={NavLink} to="/home" display="flex" alignItems="center">
+          {brand && <SuiBox component="img" src={brand} alt="Soft UI Logo" width="12rem" />}
           <SuiBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
-            <SuiTypography component="h6" variant="button" fontWeight="medium">
+            {/* <SuiTypography component="h6" variant="button" fontWeight="medium">
               {brandName}
-            </SuiTypography>
+            </SuiTypography> */}
           </SuiBox>
         </SuiBox>
       </SuiBox>

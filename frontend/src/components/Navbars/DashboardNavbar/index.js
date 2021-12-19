@@ -138,26 +138,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <NotificationItem
         image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
-        date="1 day"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        color="secondary"
-        image={
-          <Icon fontSize="small" sx={{ color: ({ palette: { white } }) => white.main }}>
-            payment
-          </Icon>
-        }
-        title={["", "Payment successfully completed"]}
-        date="2 days"
-        onClick={handleCloseMenu}
+        title={["Logout", ""]}
+        date=""
+        onClick={logoutHandler}
       />
     </Menu>
   );
@@ -182,8 +165,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
               />
             </SuiBox>
             <SuiBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
-                <IconButton sx={navbarIconButton} size="small">
+              {/* <Link to="/authentication/sign-in"> */}
+                <IconButton sx={navbarIconButton} size="small" onClick={handleOpenMenu}>
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
                       color: light ? white.main : dark.main,
@@ -199,7 +182,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     {userData.user ? `${userData.user.username}` : 'Sign In'}
                   </SuiTypography>
                 </IconButton>
-              </Link>
+              {/* </Link> */}
               <IconButton
                 size="small"
                 color="inherit"
@@ -209,25 +192,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Icon className={light ? "text-white" : "text-dark"}>
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
-              </IconButton>
-              {/* <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon>settings</Icon>
-              </IconButton> */}
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
               </IconButton>
               {notificationMenu()}
             </SuiBox>

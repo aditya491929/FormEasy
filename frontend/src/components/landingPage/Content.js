@@ -12,7 +12,8 @@ const Content = () => {
   const onGetStartedClick = () => {
     if (userData.user) {
       history("/home");
-    } else {
+    } 
+    else {
       toast("⚠️ Login/SignUp to Get Started!", {
         position: "top-center",
         autoClose: 5000,
@@ -55,7 +56,7 @@ const Content = () => {
               </span>{" "}
               instead and make everyone happy.
             </p>
-            <Button onClick={onGetStartedClick} size="lg" variant="dark">
+            <Button onClick={onGetStartedClick} size="lg" variant="dark" style={{"zIndex" : "100"}}>
               Get started
             </Button>
           </Col>
