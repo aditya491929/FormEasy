@@ -78,16 +78,21 @@ const MainHeader = (props) => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="m-auto">
+              {(userData.user && location.pathname === '/') && (
+                <Nav.Link className={classes["links"]} as={Link} to="/home">
+                  Home
+                </Nav.Link>
+              )}
               {userData.user && (
                 <Nav.Link className={classes["links"]} as={Link} to="/dashboard">
                   Dashboard
                 </Nav.Link>
               )}
-              {/* {userData.user && (
+              {(userData.user && location.pathname !== '/') && (
                 <Nav.Link className={classes["links"]} as={Link} to="/">
                   About
                 </Nav.Link>
-              )} */}
+              )}
             </Nav>
             {userData.user && (
               <Nav>
