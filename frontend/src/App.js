@@ -159,7 +159,7 @@ function App() {
   return direction === "rtl" ? (
       <BrowserRouter>
     <UserContext.Provider value={{ userData, setUserData }}>
-    <ThemeProvider theme={themeRTL}>
+    {/* <ThemeProvider theme={themeRTL}> */}
         <ToastProvider placement="top-center">
         <CssBaseline />
             {!userData.token ? (
@@ -185,13 +185,13 @@ function App() {
           <Navigate from="*" to="/dashboard" />
         </Routes>
         </ToastProvider>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </UserContext.Provider>
         </BrowserRouter>
   ) : (
       <BrowserRouter>
     <UserContext.Provider value={{ userData, setUserData }}>
-    <ThemeProvider theme={theme}>
+    {/* <ThemeProvider theme={theme}> */}
       <ToastProvider placement="top-center">
       <CssBaseline />
             {!userData.token ? (
@@ -217,7 +217,7 @@ function App() {
         <Route from="*" to="/dashboard" />
       </Routes>
       </ToastProvider>
-    </ThemeProvider>
+    {/* </ThemeProvider> */}
     </UserContext.Provider>
         </BrowserRouter>
   );

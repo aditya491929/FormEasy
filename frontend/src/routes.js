@@ -27,6 +27,15 @@ const routes = [
     // component: Dashboard,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "My Responses",
+    key: "responses",
+    route: "/dashboard/responses",
+    icon: <Shop size="12px" />,
+    // component: Dashboard,
+    noCollapse: true,
+  },
   // {
   //   type: "collapse",
   //   name: "Tables",
@@ -64,6 +73,15 @@ const routes = [
   //   noCollapse: true,
   // },
   { type: "title", title: "My Forms", key: "my-forms" },
+  {
+    type: "collapse",
+    name: "Insurance Form",
+    key: "i-form",
+    route: "/dashboard/:id",
+    icon: <Shop size="12px" />,
+    // component: Dashboard,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Create Form",
