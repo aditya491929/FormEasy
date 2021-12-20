@@ -10,7 +10,7 @@ import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
 import Error from "./components/error/Error";
 import Dashboard from "./components/dashboard/dashboardPage";
-import UploadPage from "./components/Upload/uploadPage";
+import UploadPage from "./components/upload/UploadPage";
 import SuiBox from "./components/SuiBox";
 import Sidenav from "./components/Sidenav";
 import brand from './assets/logo.png';

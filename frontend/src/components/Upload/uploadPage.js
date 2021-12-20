@@ -12,7 +12,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../../assets/theme";
 import themeRTL from "../../assets/theme/theme-rtl";
-import Upload from "./upload";
+import Upload from "./UploadForm";
+import UploadForm from "./UploadForm";
 
 const UploadPage = () => {
   const {userData, setUserData} = useContext(UserContext);
@@ -89,7 +90,7 @@ const UploadPage = () => {
             />
         )}
         {layout === "vr"}
-        <Upload/>
+        <UploadForm/>
       </ThemeProvider>
   ) : (
     <ThemeProvider theme={theme}>
@@ -109,7 +110,7 @@ const UploadPage = () => {
           />
       )}
       {layout === "vr"}
-      <Upload/>
+      <UploadForm/>
     </ThemeProvider>
   );
 };

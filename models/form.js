@@ -4,9 +4,13 @@ const FormSchema = new mongoose.Schema({
     form:[
         {
             url: String,
-            formName: String,
         }
     ],
+    formname:{
+        type: String,
+        default: ''
+
+    },
     userId: {
         type: String,
         default: '',
