@@ -5,9 +5,10 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
+import classes from "./Categories.module.css";
 
-const Categories = () => {
+const Categories = (props) => {
   const [categories, setCategories] = useState([]);
   const { userData } = useContext(UserContext);
 
@@ -49,23 +50,30 @@ const Categories = () => {
           },
         }}
       >
-        {categories.length < 0 && <CircularProgress style={{'color': '#03ef62'}} />}
+        {categories.length < 1 && (
+          <CircularProgress style={{ color: "#03ef62" }} />
+        )}
         {categories !== [] ? (
           categories.map((category) => {
             return (
-              <Grow in={true}>
+              <Grow in={true} key={category["_id"]}>
                 <Paper
                   elevation={5}
                   style={{ backgroundImage: `url(${category["url"]})` }}
-                  {...{ timeout: 0.3 }}
+                  {...{ timeout: 0.4 }}
                 >
                   <div
+                    className={classes["category-content"]}
                     style={{
                       width: "100%",
                       height: "100%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                    }}
+                    onClick={() => {
+                      console.log(category['name']);
+                      props.categorySelectHandler(category['name']);
                     }}
                   >
                     <h3 style={{ color: "white" }}>{category["name"]}</h3>

@@ -1,31 +1,13 @@
 const mongoose = require('mongoose');
 
 const CategorySchema = new mongoose.Schema({
-    form:[
-        {
-            url: String,
-            formName: String,
-        }
-    ],
-    userId: {
+    url: {
         type: String,
         default: '',
     },
-    formCategory: {
+    name: {
         type: String,
         default: '',
-    },
-    username: {
-        type: String,
-        default: '',
-    },
-    description: {
-        type: String,
-        default: '',
-    },
-    date: {
-        type: Date,
-        default: Date.now(),
     },
 });
 
