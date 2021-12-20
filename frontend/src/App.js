@@ -10,6 +10,7 @@ import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
 import Error from "./components/error/Error";
 import Dashboard from "./components/dashboard/dashboardPage";
+import UploadPage from "./components/Upload/uploadPage";
 import SuiBox from "./components/SuiBox";
 import Sidenav from "./components/Sidenav";
 import brand from './assets/logo.png';
@@ -168,6 +169,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -176,6 +178,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
@@ -200,6 +203,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -208,6 +212,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )

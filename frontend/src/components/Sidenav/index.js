@@ -26,8 +26,10 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav } = controller;
   const location = useLocation();
   const { pathname } = location;
-  const collapseName = pathname.split("/").slice(1)[0];
-
+  console.log(pathname)
+  const splitPath = pathname.split("/");
+  const collapseName = splitPath[splitPath.length - 1];
+  console.log("collapseName : ",collapseName);
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
