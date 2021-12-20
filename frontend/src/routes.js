@@ -7,6 +7,7 @@
 // import SignIn from "layouts/authentication/sign-in";
 // import SignUp from "layouts/authentication/sign-up";
 
+
 // // Soft UI Dashboard React icons
 import Shop from "./Icons/Shop";
 // import Office from "./Icons/Office";
@@ -76,8 +77,8 @@ const routes = [
   {
     type: "collapse",
     name: "Insurance Form",
-    key: "i-form",
-    route: "/dashboard/:id",
+    key: "Insurance Form",
+    route: "/dashboard/forms/:id",
     icon: <Shop size="12px" />,
     // component: Dashboard,
     noCollapse: true,
@@ -85,7 +86,7 @@ const routes = [
   {
     type: "collapse",
     name: "Create Form",
-    key: "create",
+    key: "Create Form",
     route: "/create",
     icon: <Document size="12px" />,
     // component: Billing,
@@ -95,9 +96,9 @@ const routes = [
     type: "collapse",
     name: "Upload Form",
     key: "upload",
-    route: "/upload",
+    route: "/dashboard/upload",
     icon: <Document size="12px" />,
-    // component: Billing,
+    // component: Upload,
     noCollapse: true,
   },
   { type: "title", title: "Profile", key: "my-profile" },
