@@ -9,8 +9,6 @@ const auth = require('../middleware/auth');
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
     const { userId, formCategory, username, description } = req.body;
-    console.log(req.body);
-    console.log(req.files);
     const form = new Form();
     form.userId = userId;
     form.formCategory = formCategory;

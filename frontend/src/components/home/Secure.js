@@ -5,6 +5,7 @@ import MainHeader from "../navbar/MainHeader";
 import { Layout, Breadcrumb, Tabs } from "antd";
 import "./Secure.css";
 import Categories from "./Categories";
+import CategoryTemplate from "./Category/CategoryTemplate";
 import MyForms from "./MyForms";
 import Favorites from "./Favorites";
 const { Content, Footer } = Layout;
@@ -29,6 +30,7 @@ const Secure = () => {
     width: window.innerWidth,
   });
   const [activeTabKey, setActiveTabkey] = useState("1");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
@@ -50,9 +52,17 @@ const Secure = () => {
     }
   }, [userData, history]);
 
+  const onCategorySelect = (categoryName) => {
+    setCategory(categoryName);
+  };
+
+  const onCategoryDeselect = () => {
+    setCategory("");
+  };
+
   return (
     <>
-    <style type="text/css">
+      <style type="text/css">
         {`
           .ant-tabs-ink-bar {
             background-color: #03ef62;
@@ -62,6 +72,10 @@ const Secure = () => {
           }
           .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, .ant-tabs-tab:hover  {
             color: #03ef62;
+          }
+          .ant-breadcrumb-link:hover {
+            cursor: pointer;
+            color: black;
           }
         `}
       </style>
@@ -76,20 +90,44 @@ const Secure = () => {
         >
           <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
-            {activeTabKey==='1' && <Breadcrumb.Item>Categories</Breadcrumb.Item>}
-            {activeTabKey==='2' && <Breadcrumb.Item>MyForms</Breadcrumb.Item>}
-            {activeTabKey==='3' && <Breadcrumb.Item>Favorites</Breadcrumb.Item>}
+            {activeTabKey === "1" && (
+              <Breadcrumb.Item
+                onClick={() => {
+                  onCategoryDeselect();
+                }}
+              >
+                Categories
+              </Breadcrumb.Item>
+            )}
+            {activeTabKey === "1" && category !== "" && (
+              <Breadcrumb.Item>{category}</Breadcrumb.Item>
+            )}
+            {activeTabKey === "2" && <Breadcrumb.Item>MyForms</Breadcrumb.Item>}
+            {activeTabKey === "3" && (
+              <Breadcrumb.Item>Favorites</Breadcrumb.Item>
+            )}
           </Breadcrumb>
           <div className="site-layout-content">
-            <Tabs onChange={activeKey => {setActiveTabkey(activeKey)}} tabPosition={dimensions.width < 500 ? "top" : "left"}>
+            <Tabs
+              onChange={(activeKey) => {
+                setActiveTabkey(activeKey);
+              }}
+              tabPosition={dimensions.width < 500 ? "top" : "left"}
+            >
               <TabPane tab="Categories" key="1">
-                <Categories />
+                {category === "" ? (
+                  <Categories categorySelectHandler={onCategorySelect} />
+                ) : (
+                  <CategoryTemplate
+                    categoryName={category}
+                  />
+                )}
               </TabPane>
-              <TabPane tab="My Forms" key="2">
-                <MyForms />
-              </TabPane>
-              <TabPane tab="Favorites" key="3">
+              <TabPane tab="Favorites" key="2">
                 <Favorites />
+              </TabPane>
+              <TabPane tab="My Forms" key="3">
+                <MyForms />
               </TabPane>
             </Tabs>
           </div>
