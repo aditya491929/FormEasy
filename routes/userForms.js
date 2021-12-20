@@ -8,17 +8,19 @@ const auth = require('../middleware/auth');
 
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
-    const { userId, formCategory, username, description } = req.body;
+    const { userId, username, formName, formCategory, description } = req.body;
     const form = new Form();
     form.userId = userId;
-    form.formCategory = formCategory;
     form.username = username;
+    form.formname = formName;
+    form.formCategory = formCategory;
     form.description = description;
-    form.form = req.files.map((f) => ({ url: f.path, formName: f.formName }));
+    form.form = req.files.map((f) => ({ url: f.path }));
     await form.save();
-    res.send({ message: "success" });
+    res.send({ success: true, message: "Form Uploaded Successfully!" });
   } catch (error) {
-    res.status(500).send({ message: "failed to save form" });
+    console.log(error)
+    res.status(500).send({ success: false, message: "Failed To Upload Form!" });
   }
 });
 

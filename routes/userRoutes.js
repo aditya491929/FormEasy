@@ -75,6 +75,7 @@ router.post("/login", (req, res) => {
               message: "User Logged In Successfully!",
               token: token,
               user: {
+                "id": dbUser._id,
                 "email": dbUser.email,
                 "username": dbUser.username,
                 "fname": dbUser.fname,

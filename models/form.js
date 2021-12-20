@@ -9,10 +9,9 @@ const FormSchema = new mongoose.Schema({
     formname:{
         type: String,
         default: ''
-
     },
     userId: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         default: '',
     },
     formCategory: {
