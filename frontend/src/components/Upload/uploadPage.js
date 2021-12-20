@@ -79,26 +79,6 @@ const UploadPage = () => {
 
   return direction === "rtl" ? (
     <ThemeProvider theme={themeRTL}>
-<<<<<<< HEAD
-        {/* <MainHeader logout={logoutHandler} /> */}
-      <CssBaseline/>
-        {layout === "dashboard" && (
-          userData.user === null
-          ? "Failed to Load User Details"
-          : !userData.user ? 'Loading...' :
-            <Sidenav
-              color={sidenavColor}
-              brand={brand}
-              brandName="FormEasy"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-        )}
-        {layout === "vr"}
-        <UploadForm/>
-      </ThemeProvider>
-=======
       <CssBaseline />
       {layout === "dashboard" &&
         (userData.user === null ? (
@@ -118,7 +98,6 @@ const UploadPage = () => {
       {layout === "vr"}
       <UploadForm />
     </ThemeProvider>
->>>>>>> 5c0d5b3ced9617207bba287d0220ef6625cd1083
   ) : (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -138,11 +117,7 @@ const UploadPage = () => {
           />
         ))}
       {layout === "vr"}
-<<<<<<< HEAD
-      <UploadForm/>
-=======
       <UploadForm />
->>>>>>> 5c0d5b3ced9617207bba287d0220ef6625cd1083
     </ThemeProvider>
   );
 };
