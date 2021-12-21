@@ -10,7 +10,7 @@ import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
 import Error from "./components/error/Error";
 import Dashboard from "./components/dashboard/dashboardPage";
-import UploadPage from "./components/upload/UploadPage";
+import UploadPage from "./components/Upload/uploadPage";
 import SuiBox from "./components/SuiBox";
 import Sidenav from "./components/Sidenav";
 import brand from './assets/logo.png';
@@ -22,6 +22,7 @@ import routes from "./routes";
 import themeRTL from "./assets/theme/theme-rtl";
 import theme from "./assets/theme";
 import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
+import CreatePage from "./components/Create/createPage";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -170,6 +171,7 @@ function App() {
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/create" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -179,6 +181,7 @@ function App() {
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
+                <Route path="/dashboard/create" element={<CreatePage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
@@ -204,6 +207,7 @@ function App() {
               <Route path="/home" element={<Navigate to='/' />} />
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/create" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -213,6 +217,7 @@ function App() {
                 <Route path="/home" element={<Secure />} />
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
+                <Route path="/dashboard/create" element={<CreatePage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )

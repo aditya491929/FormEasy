@@ -86,8 +86,8 @@ const routes = [
   {
     type: "collapse",
     name: "Create Form",
-    key: "Create Form",
-    route: "/create",
+    key: "create",
+    route: "/dashboard/create",
     icon: <Document size="12px" />,
     // component: Billing,
     noCollapse: true,
