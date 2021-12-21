@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
-// import { Routes, Route, Switch, BrowserRouter, Navigate } from "react-router-dom";
 import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
-import { ToastProvider } from 'react-toast-notifications';
+import { ToastProvider } from "react-toast-notifications";
 import axios from "axios";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/landingPage/Home";
 import Secure from "./components/home/Secure";
 import Error from "./components/error/Error";
 import Dashboard from "./components/dashboard/dashboardPage";
-import UploadPage from "./components/Upload/uploadPage";
+import UploadPage from "./components/upload/UploadPage";
+import FormPage from "./components/FormPage/FormPage";
 import SuiBox from "./components/SuiBox";
 import Sidenav from "./components/Sidenav";
-import brand from './assets/logo.png';
+import brand from "./assets/logo.png";
 import Icon from "@mui/material/Icon";
 import Configurator from "./components/Configurator";
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import routes from "./routes";
+import "./App.css";
 import themeRTL from "./assets/theme/theme-rtl";
 import theme from "./assets/theme";
 import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
@@ -31,7 +30,8 @@ function App() {
   });
 
   const [controller, dispatch] = useNavController();
-  const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
+  const { miniSidenav, direction, layout, openConfigurator, sidenavColor } =
+    controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   // const { pathname } = useLocation();
@@ -39,12 +39,11 @@ function App() {
   useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
-      console.log(token)
+      console.log(token);
       if (token == null) {
         localStorage.setItem("auth-token", "");
         token = "";
-      }
-      else {
+      } else {
         const tokenResponse = await axios.post(
           `${process.env.REACT_APP_API_ENDPOINT}users/verifyToken`,
           null,
@@ -52,7 +51,7 @@ function App() {
             headers: { "x-auth-token": token },
           }
         );
-        console.log(tokenResponse.data)  
+        console.log(tokenResponse.data);
         if (tokenResponse.data) {
           const userRes = await axios.get(
             `${process.env.REACT_APP_API_ENDPOINT}users/currentUser`,
@@ -88,7 +87,8 @@ function App() {
   };
 
   // Change the openConfigurator state
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -97,37 +97,42 @@ function App() {
       }
 
       if (route.route) {
-        return <Route exact path={route.route} component={route.component} key={route.key} />;
+        return (
+          <Route
+            exact
+            path={route.route}
+            component={route.component}
+            key={route.key}
+          />
+        );
       }
 
       return null;
     });
 
-
-    const configsButton = (
-      <SuiBox
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        width="3.5rem"
-        height="3.5rem"
-        bgColor="white"
-        shadow="sm"
-        borderRadius="50%"
-        position="fixed"
-        right="2rem"
-        bottom="2rem"
-        zIndex={99}
-        color="dark"
-        sx={{ cursor: "pointer" }}
-        onClick={handleConfiguratorOpen}
-      >
-        <Icon fontSize="default" color="inherit">
-          settings
-        </Icon>
-      </SuiBox>
-    );
-
+  const configsButton = (
+    <SuiBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.5rem"
+      height="3.5rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="50%"
+      position="fixed"
+      right="2rem"
+      bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpen}
+    >
+      <Icon fontSize="default" color="inherit">
+        settings
+      </Icon>
+    </SuiBox>
+  );
 
   // return (
   //   <UserContext.Provider value={{ userData, setUserData }}>
@@ -157,15 +162,12 @@ function App() {
   //   </UserContext.Provider>
   // );
 
-
-
   return direction === "rtl" ? (
-      <BrowserRouter>
-    <UserContext.Provider value={{ userData, setUserData }}>
-    {/* <ThemeProvider theme={themeRTL}> */}
+    <BrowserRouter>
+      <UserContext.Provider value={{ userData, setUserData }}>
         <ToastProvider placement="top-center">
-        <CssBaseline />
-            {!userData.token ? (
+          <CssBaseline />
+          {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
@@ -192,16 +194,14 @@ function App() {
           <Navigate from="*" to="/dashboard" />
         </Routes>
         </ToastProvider>
-      {/* </ThemeProvider> */}
-    </UserContext.Provider>
-        </BrowserRouter>
+      </UserContext.Provider>
+    </BrowserRouter>
   ) : (
-      <BrowserRouter>
-    <UserContext.Provider value={{ userData, setUserData }}>
-    {/* <ThemeProvider theme={theme}> */}
-      <ToastProvider placement="top-center">
-      <CssBaseline />
-            {!userData.token ? (
+    <BrowserRouter>
+      <UserContext.Provider value={{ userData, setUserData }}>
+        <ToastProvider placement="top-center">
+          <CssBaseline />
+          {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Navigate to='/' />} />
