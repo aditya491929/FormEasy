@@ -174,6 +174,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/form" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -184,6 +185,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/form" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
@@ -208,6 +210,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/form" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -218,6 +221,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/form" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )

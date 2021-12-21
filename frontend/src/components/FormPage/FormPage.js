@@ -116,7 +116,7 @@ const FormPage = () => {
               }}
             >
               <Tab eventKey="1" title="Form">
-                <h1>Form</h1>
+                {/* <h1>Form</h1> */}
                 <Empty
                   image={Empty.PRESENTED_IMAGE_DEFAULT}
                   imageStyle={{
@@ -126,7 +126,7 @@ const FormPage = () => {
                 ></Empty>
               </Tab>
               <Tab eventKey="2" title="Reference">
-                <h1>Reference</h1>
+                {/* <h1>Reference</h1> */}
                 {/* <Empty
                   image={Empty.PRESENTED_IMAGE_DEFAULT}
                   imageStyle={{
@@ -164,7 +164,7 @@ const FormPage = () => {
                 </div>
               </Tab>
               <Tab eventKey="3" title="Description">
-                <h1>Description</h1>
+                {/* <h1>Description</h1> */}
                 <Empty
                   image={Empty.PRESENTED_IMAGE_DEFAULT}
                   imageStyle={{
