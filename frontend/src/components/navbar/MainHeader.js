@@ -88,8 +88,8 @@ const MainHeader = (props) => {
                   Dashboard
                 </Nav.Link>
               )}
-              {(userData.user && location.pathname !== '/') && (
-                <Nav.Link className={classes["links"]} as={Link} to="/">
+              {(userData.user && location.pathname !== '/forms') && (
+                <Nav.Link className={classes["links"]} as={Link} to="/form">
                   About
                 </Nav.Link>
               )}
