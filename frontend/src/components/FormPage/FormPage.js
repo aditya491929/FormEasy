@@ -3,7 +3,9 @@ import { Layout, Breadcrumb, Empty } from "antd";
 import { Tabs, Tab, Button, ButtonGroup } from "react-bootstrap";
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRightOutlined, ChevronLeftOutlined } from "@mui/icons-material";
+import FormRender from "./components/formRenderer";
 const { Content } = Layout;
+
 
 function debounce(fn, ms) {
   let timer;
@@ -45,6 +47,72 @@ const FormPage = () => {
     changePage(1);
   }
 
+  // useEffect(() => {
+  //   const originalFormData = [
+  //     {
+  //       type: "text",
+  //       label: "Text Field",
+  //       className: "form-control",
+  //       name: "text-1478701075825",
+  //       userData: ["user entered data"]
+  //     },
+  //     {
+  //       type: "checkbox-group",
+  //       label: "Checkbox Group",
+  //       className: "checkbox-group",
+  //       name: "checkbox-group-1478704652409",
+  //       values: [
+  //         {
+  //           label: "Option 1",
+  //           value: "option-1",
+  //           selected: true
+  //         },
+  //         {
+  //           label: "Option 2",
+  //           value: "option-2"
+  //         },
+  //         {
+  //           label: "Option 3",
+  //           value: "option-3",
+  //           selected: true
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       type: "select",
+  //       label: "Select",
+  //       className: "form-control",
+  //       name: "select-1478701076382",
+  //       values: [
+  //         {
+  //           label: "Option 1",
+  //           value: "option-1",
+  //           selected: true
+  //         },
+  //         {
+  //           label: "Option 2",
+  //           value: "option-2"
+  //         },
+  //         {
+  //           label: "Option 3",
+  //           value: "option-3"
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       type: "textarea",
+  //       label: "Text Area",
+  //       className: "form-control",
+  //       name: "textarea-1478701077511"
+  //     }
+  //   ];
+  //   const formData = JSON.stringify(originalFormData);
+  //   console.log("1");
+  //   let form = $(fbRef.current).formRender({formData: formData});
+  //   setFormState(form);
+  // }, []);
+
+
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
       setDimensions({
@@ -57,6 +125,70 @@ const FormPage = () => {
       window.removeEventListener("resize", debouncedHandleResize);
     };
   });
+
+  // function submitForm() {
+  //   alert(formState.formRender("userData"));
+  // }
+
+  const originalFormData = [
+    {
+      type: "text",
+      label: "Text Field",
+      className: "form-control",
+      name: "text-1478701075825",
+      userData: ["user entered data"]
+    },
+    {
+      type: "checkbox-group",
+      label: "Checkbox Group",
+      className: "checkbox-group",
+      name: "checkbox-group-1478704652409",
+      values: [
+        {
+          label: "Option 1",
+          value: "option-1",
+          selected: true
+        },
+        {
+          label: "Option 2",
+          value: "option-2"
+        },
+        {
+          label: "Option 3",
+          value: "option-3",
+          selected: true
+        }
+      ]
+    },
+    {
+      type: "select",
+      label: "Select",
+      className: "form-control",
+      name: "select-1478701076382",
+      values: [
+        {
+          label: "Option 1",
+          value: "option-1",
+          selected: true
+        },
+        {
+          label: "Option 2",
+          value: "option-2"
+        },
+        {
+          label: "Option 3",
+          value: "option-3"
+        }
+      ]
+    },
+    {
+      type: "textarea",
+      label: "Text Area",
+      className: "form-control",
+      name: "textarea-1478701077511"
+    }
+  ];
+  const formData = JSON.stringify(originalFormData);
 
   return (
     <>
@@ -117,13 +249,23 @@ const FormPage = () => {
             >
               <Tab eventKey="1" title="Form">
                 {/* <h1>Form</h1> */}
-                <Empty
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: "0px 0px 20px 0px",
+                  }}
+                >
+                  <FormRender formData={formData}/>
+                </div>
+                {/* <Empty
                   image={Empty.PRESENTED_IMAGE_DEFAULT}
                   imageStyle={{
                     height: 60,
                   }}
                   description={<span>Form Not Available!</span>}
-                ></Empty>
+                ></Empty> */}
               </Tab>
               <Tab eventKey="2" title="Reference">
                 {/* <h1>Reference</h1> */}
