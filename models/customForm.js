@@ -8,6 +8,7 @@ const CustomFormSchema = new mongoose.Schema({
     ],
     formData:{
       type: String,
+      default: ''
     },
     formname:{
         type: String,
@@ -28,6 +29,9 @@ const CustomFormSchema = new mongoose.Schema({
     description: {
         type: String,
         default: '',
+    },
+    isAccepting: {
+        type: Boolean,
     },
     date: {
         type: Date,
