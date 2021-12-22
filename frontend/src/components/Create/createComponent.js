@@ -3,17 +3,18 @@ import Grid from "@mui/material/Grid";
 import DashboardLayout from "../LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../Navbars/DashboardNavbar";
 import Footer from "../Footer";
-import Uform from "./components/Form/index";
+import DragDrop from "./components";
 
 
-const UploadForm = () => {
+
+const CreateComponent = () => {
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Grid container spacing={3} py={3}>
         <Grid item lg={12} style={{minWidth: '100%', minHeight: '80vh'}}>
-        <Uform />
+          <DragDrop/>
         </Grid>
       </Grid>
       <Footer />
@@ -21,4 +22,4 @@ const UploadForm = () => {
   );
 };
 
-export default UploadForm;
+export default CreateComponent;

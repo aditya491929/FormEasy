@@ -20,11 +20,8 @@ import routes from "./routes";
 import "./App.css";
 import themeRTL from "./assets/theme/theme-rtl";
 import theme from "./assets/theme";
-import {
-  useNavController,
-  setMiniSidenav,
-  setOpenConfigurator,
-} from "./context/NavContext";
+import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
+import CreatePage from "./components/Create/createPage";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -173,27 +170,31 @@ function App() {
           {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Navigate to="/" />} />
-              <Route path="/dashboard" element={<Navigate to="/" />} />
-              <Route path="/dashboard/upload" element={<Navigate to="/" />} />
-              <Route path="/form" element={<Navigate to="/" />} />
+              <Route path="/home" element={<Navigate to='/' />} />
+              <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/form" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
-          ) : (
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Secure />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/upload" element={<UploadPage />} />
-              <Route path="/form" element={<FormPage />} />
-              <Route path="/*" element={<Error />} />
-            </Routes>
-          )}
-          {layout === "vr" && <Configurator />}
-          <Routes>
-            {getRoutes(routes)}
-            <Navigate from="*" to="/dashboard" />
-          </Routes>
+            )
+            : (
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Secure />} />
+                <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/dashboard/upload" element={<UploadPage/>}/>
+                <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/form" element={<FormPage/>}/>
+                <Route path="/*" element={<Error />} />
+              </Routes>
+            )
+          }
+        {layout === "vr" && <Configurator />}
+        <Routes>
+          {getRoutes(routes)}
+          <Navigate from="*" to="/dashboard" />
+        </Routes>
         </ToastProvider>
       </UserContext.Provider>
     </BrowserRouter>
@@ -205,30 +206,35 @@ function App() {
           {!userData.token ? (
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Navigate to="/" />} />
-              <Route path="/dashboard" element={<Navigate to="/" />} />
-              <Route path="/dashboard/upload" element={<Navigate to="/" />} />
-              <Route path="/form" element={<Navigate to="/" />} />
+              <Route path="/home" element={<Navigate to='/' />} />
+              <Route path="/dashboard" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/form" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
-          ) : (
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Secure />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/upload" element={<UploadPage />} />
-              <Route path="/form" element={<FormPage />} />
-              <Route path="/*" element={<Error />} />
-            </Routes>
-          )}
-          {layout === "vr" && <Configurator />}
-          <Routes>
-            {getRoutes(routes)}
-            <Route from="*" to="/dashboard" />
-          </Routes>
-        </ToastProvider>
-      </UserContext.Provider>
-    </BrowserRouter>
+            )
+            : (
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Secure />} />
+                <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/dashboard/upload" element={<UploadPage/>}/>
+                <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/form" element={<FormPage/>}/>
+                <Route path="/*" element={<Error />} />
+              </Routes>
+            )
+          }
+      {layout === "vr" && <Configurator />}
+      <Routes>
+        {getRoutes(routes)}
+        <Route from="*" to="/dashboard" />
+      </Routes>
+      </ToastProvider>
+    {/* </ThemeProvider> */}
+    </UserContext.Provider>
+        </BrowserRouter>
   );
 }
 

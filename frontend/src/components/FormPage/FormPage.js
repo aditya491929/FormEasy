@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Breadcrumb, Empty } from "antd";
-import { Tabs, Tab } from "react-bootstrap";
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
-import file from './FeeReceipt.pdf';
+import { Tabs, Tab, Button, ButtonGroup } from "react-bootstrap";
+import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
+import { ChevronRightOutlined, ChevronLeftOutlined } from "@mui/icons-material";
 const { Content } = Layout;
 
 function debounce(fn, ms) {
@@ -15,6 +15,8 @@ function debounce(fn, ms) {
     }, ms);
   };
 }
+const url =
+  "https://cors-anywhere.herokuapp.com/https://res.cloudinary.com/formeasy/image/upload/v1639907305/formEz/zq1ddlv2qppyso1optwx.pdf";
 
 const FormPage = () => {
   const [tabId, setTabId] = useState("1");
@@ -25,8 +27,22 @@ const FormPage = () => {
     width: window.innerWidth,
   });
 
+  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
+  }
+
+  function changePage(offset) {
+    setPageNumber((prevPageNumber) => prevPageNumber + offset);
+  }
+
+  function previousPage() {
+    changePage(-1);
+  }
+
+  function nextPage() {
+    changePage(1);
   }
 
   useEffect(() => {
@@ -61,6 +77,18 @@ const FormPage = () => {
           .site-layout-content{
               margin-bottom: 20px;
           }
+          .react-pdf__Page{
+            position: relative;
+            max-height: 100vh;
+            max-width: 100%;
+            overflow: scroll;
+          }
+          .react-pdf__Page__canvas{
+            display: block;
+            user-select: none;
+            width: 100% !important;
+            height: 100% !important;
+          }
         `}
       </style>
       <Layout className="layout">
@@ -75,6 +103,9 @@ const FormPage = () => {
             <Breadcrumb.Item>formName</Breadcrumb.Item>
             {tabId === "1" && <Breadcrumb.Item>Form</Breadcrumb.Item>}
             {tabId === "2" && <Breadcrumb.Item>Form Reference</Breadcrumb.Item>}
+            {tabId === "3" && (
+              <Breadcrumb.Item>Form Description</Breadcrumb.Item>
+            )}
           </Breadcrumb>
           <div className="site-layout-content">
             <Tabs
@@ -85,7 +116,7 @@ const FormPage = () => {
               }}
             >
               <Tab eventKey="1" title="Form">
-                <h1>Form</h1>
+                {/* <h1>Form</h1> */}
                 <Empty
                   image={Empty.PRESENTED_IMAGE_DEFAULT}
                   imageStyle={{
@@ -95,18 +126,52 @@ const FormPage = () => {
                 ></Empty>
               </Tab>
               <Tab eventKey="2" title="Reference">
-                <h1>Reference</h1>
+                {/* <h1>Reference</h1> */}
+                {/* <Empty
+                  image={Empty.PRESENTED_IMAGE_DEFAULT}
+                  imageStyle={{
+                    height: 60,
+                  }}
+                  description={<span>Reference Not Available!</span>}
+                ></Empty> */}
                 <div>
-                  <Document
-                    file={file}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                  >
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <ButtonGroup aria-label="Basic example">
+                      <Button
+                        disabled={pageNumber <= 1}
+                        onClick={previousPage}
+                        variant="dark"
+                      >
+                        <ChevronLeftOutlined />
+                      </Button>
+                      <Button variant="dark">
+                        {" "}
+                        Page {pageNumber || (numPages ? 1 : "--")} of{" "}
+                        {numPages || "--"}
+                      </Button>
+                      <Button
+                        disabled={pageNumber >= numPages}
+                        onClick={nextPage}
+                        variant="dark"
+                      >
+                        <ChevronRightOutlined />
+                      </Button>
+                    </ButtonGroup>
+                  </div>
+                  <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
                     <Page pageNumber={pageNumber} />
                   </Document>
-                  <p>
-                    Page {pageNumber} of {numPages}
-                  </p>
                 </div>
+              </Tab>
+              <Tab eventKey="3" title="Description">
+                {/* <h1>Description</h1> */}
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_DEFAULT}
+                  imageStyle={{
+                    height: 60,
+                  }}
+                  description={<span>Description Not Available!</span>}
+                ></Empty>
               </Tab>
             </Tabs>
           </div>
