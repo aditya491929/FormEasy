@@ -13,7 +13,7 @@ const CreateComponent = () => {
     <DashboardLayout>
       <DashboardNavbar />
       <Grid container spacing={3} py={3}>
-        <Grid item lg={12}>
+        <Grid item lg={12} style={{minWidth: '100%', minHeight: '80vh'}}>
           <DragDrop/>
         </Grid>
       </Grid>
