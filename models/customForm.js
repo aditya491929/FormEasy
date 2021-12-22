@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const CustomFormSchema = new mongoose.Schema({
+    reference:[
+        {
+            url: String,
+        }
+    ],
     formData:{
       type: String,
     },
