@@ -11,15 +11,11 @@ import Dashboard from "./components/dashboard/dashboardPage";
 import UploadPage from "./components/upload/UploadPage";
 import FormPage from "./components/FormPage/FormPage";
 import SuiBox from "./components/SuiBox";
-import Sidenav from "./components/Sidenav";
-import brand from "./assets/logo.png";
 import Icon from "@mui/material/Icon";
 import Configurator from "./components/Configurator";
 import CssBaseline from "@mui/material/CssBaseline";
 import routes from "./routes";
 import "./App.css";
-import themeRTL from "./assets/theme/theme-rtl";
-import theme from "./assets/theme";
 import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
 import CreatePage from "./components/Create/createPage";
 
@@ -34,7 +30,6 @@ function App() {
     controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
-  // const { pathname } = useLocation();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -134,34 +129,6 @@ function App() {
     </SuiBox>
   );
 
-  // return (
-  //   <UserContext.Provider value={{ userData, setUserData }}>
-  //     <ThemeProvider theme={themeRTL}>
-  //     <ToastProvider placement="top-center">
-  //       <BrowserRouter>
-  //           {!userData.token ? (
-  //           <Routes>
-  //             <Route path="/" element={<Home />} />
-  //             <Route path="/home" element={<Navigate to='/' />} />
-  //             <Route path="/dashboard" element={<Navigate to='/' />}/>
-  //             <Route path="/*" element={<Navigate to='/' />} />
-  //           </Routes>
-  //           )
-  //           : (
-  //             <Routes>
-  //               <Route path="/" element={<Home />} />
-  //               <Route path="/home" element={<Secure />} />
-  //               <Route path="/dashboard" element={<Dashboard />}/>
-  //               <Route path="/*" element={<h1>Error 404</h1>} />
-  //             </Routes>
-  //           )
-  //         }
-  //       </BrowserRouter>
-  //     </ToastProvider>
-  //     </ThemeProvider>
-  //   </UserContext.Provider>
-  // );
-
   return direction === "rtl" ? (
     <BrowserRouter>
       <UserContext.Provider value={{ userData, setUserData }}>
@@ -174,7 +141,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
-              <Route path="/form" element={<Navigate to='/' />}/>
+              <Route path="/form/:id" element={<FormPage />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -185,7 +152,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
-                <Route path="/form" element={<FormPage/>}/>
+                <Route path="/form/:id" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
@@ -210,7 +177,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
-              <Route path="/form" element={<Navigate to='/' />}/>
+              <Route path="/form/:id" element={<FormPage />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -221,7 +188,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
-                <Route path="/form" element={<FormPage/>}/>
+                <Route path="/form/:id" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )

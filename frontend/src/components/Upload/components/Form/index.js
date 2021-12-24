@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Card from "@mui/material/Card";
@@ -7,7 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import SuiBox from "../../../SuiBox";
 import SuiTypography from "../../../SuiTypography";
-import { Upload, Button as Btn, Modal } from "antd";
+import { Upload, Button as Btn } from "antd";
+import {CornerDialog} from 'evergreen-ui';
 import { UploadOutlined } from "@ant-design/icons";
 import NProgress from "nprogress";
 import "../../../authPage/nprogress.css";
@@ -113,20 +115,16 @@ function Uform() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Modal
-        title="Form QR Code"
-        visible={modalVisibility}
-        onOk={() => {
-          setModalVisibility(false);
-        }}
-        onCancel={() => {
-          setModalVisibility(false);
-        }}
-        cancelText="Close"
+       <CornerDialog
+        title="Form QR Code (Click to Preview Form)"
+        isShown={modalVisibility}
+        onCloseComplete={() => setModalVisibility(false)}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <QRCode value={`http://localhost:3000/form/${formid}`} />
-      </Modal>
+        <Link to={`/form/${formid}`}>
+          <QRCode value={`http://localhost:3000/form/${formid}`} />
+        </Link>
+      </CornerDialog>
       <Card className="h-100">
         <SuiBox pt={3} px={3}>
           <SuiTypography variant="h6" fontWeight="medium">

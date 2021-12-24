@@ -6,6 +6,22 @@ const upload = multer({ storage });
 const CustomForm = require("../models/customForm");
 const auth = require('../middleware/auth');
 
+router.get("/get/:id", async (req,res) => {
+  try{
+    const {id} = req.params;
+    console.log(req.params)
+    const formData = await CustomForm.findOne({ _id: id });
+    if(formData.isAccepting){
+      res.send({data: formData, success: true, message: 'Form accepting responses'});
+    }else{
+      res.send({data: formData, success: true, message: 'Form isn\'t accepting responses'})
+    }
+  }catch(err){
+    console.log(err);
+    res.status(500).send({success: false, message: 'Something went wrong'})
+  }
+})
+
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
     const { userId, username, formName, formCategory, description, visibility } = req.body;

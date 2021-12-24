@@ -89,7 +89,7 @@ const MainHeader = (props) => {
                 </Nav.Link>
               )}
               {(userData.user && location.pathname !== '/forms') && (
-                <Nav.Link className={classes["links"]} as={Link} to="/form">
+                <Nav.Link className={classes["links"]} as={Link} to="/form/61c39ce116c348d6b3d711a7">
                   About
                 </Nav.Link>
               )}

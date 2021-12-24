@@ -1,11 +1,13 @@
 import { useState, createRef, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Form, Card as CD, Button } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
-import { Steps, Result, Empty, Button as Btn, Upload, Modal } from "antd";
+import { Steps, Result, Empty, Button as Btn, Upload } from "antd";
+import { CornerDialog } from "evergreen-ui";
 import { UploadOutlined } from "@ant-design/icons";
 import { FormOutlined, CheckOutlined } from "@ant-design/icons";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import axios from "axios";
 import $ from "jquery";
 import Card from "@mui/material/Card";
@@ -170,20 +172,16 @@ const DragDrop = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Modal
-        title="Form QR Code"
-        visible={modalVisibility}
-        onOk={() => {
-          setModalVisibility(false);
-        }}
-        onCancel={() => {
-          setModalVisibility(false);
-        }}
-        cancelText="Close"
+      <CornerDialog
+        title="Form QR Code (Click to Preview Form)"
+        isShown={modalVisibility}
+        onCloseComplete={() => setModalVisibility(false)}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <QRCode value={`http://localhost:3000/form/${formid}`} />
-      </Modal>
+        <Link to={`/form/${formid}`}>
+          <QRCode value={`http://localhost:3000/form/${formid}`} />
+        </Link>
+      </CornerDialog>
       <SuiTypography variant="h6" fontWeight="medium">
         {dimensions.width > 1000 ? (
           <Card className="h-100">
@@ -313,15 +311,22 @@ const DragDrop = () => {
                             <Btn icon={<UploadOutlined />}>Upload</Btn>
                           </Upload>
                         </Form.Group>
-                      <FormControlLabel style={{padding: '0px 0px 5px 10px'}}
-                        control={
-                          <Switch
-                            checked={formVisibility}
-                            onChange={() => {setFormVisibility(!formVisibility)}}
-                          />
-                        }
-                        label={formVisibility ? 'Accepting Response!' : 'Not Accepting Response!'}
-                      />
+                        <FormControlLabel
+                          style={{ padding: "0px 0px 5px 10px" }}
+                          control={
+                            <Switch
+                              checked={formVisibility}
+                              onChange={() => {
+                                setFormVisibility(!formVisibility);
+                              }}
+                            />
+                          }
+                          label={
+                            formVisibility
+                              ? "Accepting Response!"
+                              : "Not Accepting Response!"
+                          }
+                        />
                       </Form>
                       <Button
                         variant="dark"

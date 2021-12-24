@@ -1,21 +1,7 @@
-import { useState, createRef, useEffect, useRef } from "react";
-import { Form, Card as CD, Button } from "react-bootstrap";
-import { useToasts } from "react-toast-notifications";
-import { Steps, Result, Empty, Button as Btn, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import {
-  FormOutlined,
-  CheckOutlined,
-} from "@ant-design/icons";
-import axios from "axios";
+import { useState, createRef, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import $ from "jquery";
-import Card from "@mui/material/Card";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import NProgress from "nprogress";
 import "../../authPage/nprogress.css";
-import SuiTypography from "../../SuiTypography";
-const { Step } = Steps;
 
 window.jQuery = $;
 window.$ = $;
@@ -35,12 +21,9 @@ function debounce(fn, ms) {
   };
 }
 
-const FormRenderer = ({ formData }) => {
+const FormRenderer = ( {formData} ) => {
   const renderRef = createRef();
-  const { addToast } = useToasts();
   const [formState, setFormState] = useState();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -62,6 +45,7 @@ const FormRenderer = ({ formData }) => {
   useEffect(() => {
     const form = $(renderRef.current).formRender({ formData: formData });
     setFormState(form);
+    console.log(formData)
   }, []);
 
 
@@ -76,7 +60,7 @@ const FormRenderer = ({ formData }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        minWidth: "75%",
+        minWidth: (dimensions.width < 550 ? "85%" : dimensions.width < 500 ? "95%" : "75%"),
         margin: "0px 0px 20px 0px",
       }}
     >
@@ -85,7 +69,6 @@ const FormRenderer = ({ formData }) => {
         style={{
           display: "flex",
           justifyContent: "center",
-          margin: "0px 0px 20px 0px",
         }}
       >
         <Button

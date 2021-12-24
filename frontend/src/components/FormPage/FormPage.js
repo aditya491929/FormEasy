@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Layout, Breadcrumb, Empty } from "antd";
 import { Tabs, Tab, Button, ButtonGroup } from "react-bootstrap";
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRightOutlined, ChevronLeftOutlined } from "@mui/icons-material";
+import CircularProgress from "@mui/material/CircularProgress";
 import FormRender from "./components/formRenderer";
+import axios from "axios";
 const { Content } = Layout;
-
 
 function debounce(fn, ms) {
   let timer;
@@ -17,17 +19,21 @@ function debounce(fn, ms) {
     }, ms);
   };
 }
-const url =
-  "https://cors-anywhere.herokuapp.com/https://res.cloudinary.com/formeasy/image/upload/v1639907305/formEz/zq1ddlv2qppyso1optwx.pdf";
 
 const FormPage = () => {
   const [tabId, setTabId] = useState("1");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [formData, setFormData] = useState("");
+  const [formDetails, setFormDetails] = useState("");
+  const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
+
+  const history = useNavigate();
 
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -47,72 +53,6 @@ const FormPage = () => {
     changePage(1);
   }
 
-  // useEffect(() => {
-  //   const originalFormData = [
-  //     {
-  //       type: "text",
-  //       label: "Text Field",
-  //       className: "form-control",
-  //       name: "text-1478701075825",
-  //       userData: ["user entered data"]
-  //     },
-  //     {
-  //       type: "checkbox-group",
-  //       label: "Checkbox Group",
-  //       className: "checkbox-group",
-  //       name: "checkbox-group-1478704652409",
-  //       values: [
-  //         {
-  //           label: "Option 1",
-  //           value: "option-1",
-  //           selected: true
-  //         },
-  //         {
-  //           label: "Option 2",
-  //           value: "option-2"
-  //         },
-  //         {
-  //           label: "Option 3",
-  //           value: "option-3",
-  //           selected: true
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       type: "select",
-  //       label: "Select",
-  //       className: "form-control",
-  //       name: "select-1478701076382",
-  //       values: [
-  //         {
-  //           label: "Option 1",
-  //           value: "option-1",
-  //           selected: true
-  //         },
-  //         {
-  //           label: "Option 2",
-  //           value: "option-2"
-  //         },
-  //         {
-  //           label: "Option 3",
-  //           value: "option-3"
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       type: "textarea",
-  //       label: "Text Area",
-  //       className: "form-control",
-  //       name: "textarea-1478701077511"
-  //     }
-  //   ];
-  //   const formData = JSON.stringify(originalFormData);
-  //   console.log("1");
-  //   let form = $(fbRef.current).formRender({formData: formData});
-  //   setFormState(form);
-  // }, []);
-
-
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
       setDimensions({
@@ -126,69 +66,30 @@ const FormPage = () => {
     };
   });
 
-  // function submitForm() {
-  //   alert(formState.formRender("userData"));
-  // }
-
-  const originalFormData = [
-    {
-      type: "text",
-      label: "Text Field",
-      className: "form-control",
-      name: "text-1478701075825",
-      userData: ["user entered data"]
-    },
-    {
-      type: "checkbox-group",
-      label: "Checkbox Group",
-      className: "checkbox-group",
-      name: "checkbox-group-1478704652409",
-      values: [
-        {
-          label: "Option 1",
-          value: "option-1",
-          selected: true
-        },
-        {
-          label: "Option 2",
-          value: "option-2"
-        },
-        {
-          label: "Option 3",
-          value: "option-3",
-          selected: true
-        }
-      ]
-    },
-    {
-      type: "select",
-      label: "Select",
-      className: "form-control",
-      name: "select-1478701076382",
-      values: [
-        {
-          label: "Option 1",
-          value: "option-1",
-          selected: true
-        },
-        {
-          label: "Option 2",
-          value: "option-2"
-        },
-        {
-          label: "Option 3",
-          value: "option-3"
-        }
-      ]
-    },
-    {
-      type: "textarea",
-      label: "Text Area",
-      className: "form-control",
-      name: "textarea-1478701077511"
+  useEffect(async () => {
+    let formId = window.location.href.split("/").pop();
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_ENDPOINT}forms/get/${formId}`
+    );
+    if (response.data.success) {
+      if (response.data.data.formData.length) {
+        const fdata = JSON.stringify(JSON.parse(response.data.data.formData));
+        console.log(fdata);
+        setFormData(fdata);
+      }
+      if (response.data.data.reference.length) {
+        console.log(response.data.data.reference[0].url);
+        setUrl(
+          `https://cors-anywhere.herokuapp.com/${response.data.data.reference[0].url}`
+        );
+      }
+      setFormDetails(response.data.data);
+      setLoading(false);
+    } else {
+      alert(response.data.message);
+      setLoading(false);
     }
-  ];
-  const formData = JSON.stringify(originalFormData);
+  }, []);
 
   return (
     <>
@@ -207,7 +108,7 @@ const FormPage = () => {
               min-height: 100vh;
           }
           .site-layout-content{
-              margin-bottom: 20px;
+              margin-bottom: 5px;
           }
           .react-pdf__Page{
             position: relative;
@@ -221,6 +122,10 @@ const FormPage = () => {
             width: 100% !important;
             height: 100% !important;
           }
+          .ant-breadcrumb-link:hover {
+            cursor: pointer;
+            color: black;
+          }
         `}
       </style>
       <Layout className="layout">
@@ -232,90 +137,150 @@ const FormPage = () => {
           }
         >
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>formName</Breadcrumb.Item>
+            <Breadcrumb.Item
+              onClick={() => {
+                history("/home");
+              }}
+            >
+              FormEasy
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{formDetails.formname}</Breadcrumb.Item>
             {tabId === "1" && <Breadcrumb.Item>Form</Breadcrumb.Item>}
             {tabId === "2" && <Breadcrumb.Item>Form Reference</Breadcrumb.Item>}
             {tabId === "3" && (
               <Breadcrumb.Item>Form Description</Breadcrumb.Item>
             )}
           </Breadcrumb>
-          <div className="site-layout-content">
-            <Tabs
-              defaultActiveKey="1"
-              className="mb-3"
-              onSelect={(eventKey, _) => {
-                setTabId(eventKey);
+          {loading && (
+            <div
+              className="site-layout-content"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
-              <Tab eventKey="1" title="Form">
-                {/* <h1>Form</h1> */}
+              <div
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress style={{ color: "#03ef62" }} />
+              </div>
+            </div>
+          )}
+          {!loading && (
+            <div className="site-layout-content">
+              <Tabs
+                defaultActiveKey="1"
+                className="mb-3"
+                onSelect={(eventKey, _) => {
+                  setTabId(eventKey);
+                }}
+              >
+                <Tab eventKey="1" title="Form">
+                  {formData === "" ? (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_DEFAULT}
+                      imageStyle={{
+                        height: 100,
+                      }}
+                      description={<span>Form Not Available!</span>}
+                    ></Empty>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {!formDetails.isAccepting ? (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_DEFAULT}
+                          imageStyle={{
+                            height: 100,
+                          }}
+                          description={
+                            <span>Form Not Accepting Response!</span>
+                          }
+                        ></Empty>
+                      ) : (
+                        <FormRender formData={formData} />
+                      )}
+                    </div>
+                  )}
+                </Tab>
+                <Tab eventKey="2" title="Reference">
+                  {url === "" && 
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_DEFAULT}
+                      imageStyle={{
+                        height: 100,
+                      }}
+                      description={<span>Reference Not Available!</span>}
+                    ></Empty>
+                  } 
+                  { url !== '' &&
+                    <div>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <ButtonGroup aria-label="Basic example" style={{marginBottom: '5px'}}>
+                          <Button
+                            disabled={pageNumber <= 1}
+                            onClick={previousPage}
+                            variant="dark"
+                          >
+                            <ChevronLeftOutlined />
+                          </Button>
+                          <Button variant="dark">
+                            {" "}
+                            Page {pageNumber || (numPages ? 1 : "--")} of{" "}
+                            {numPages || "--"}
+                          </Button>
+                          <Button
+                            disabled={pageNumber >= numPages}
+                            onClick={nextPage}
+                            variant="dark"
+                          >
+                            <ChevronRightOutlined />
+                          </Button>
+                        </ButtonGroup>
+                      </div>
+                      <Document
+                        file={url}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                      >
+                        <Page pageNumber={pageNumber} />
+                      </Document>
+                    </div>
+                  }
 
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    margin: "0px 0px 20px 0px",
-                  }}
-                >
-                  <FormRender formData={formData}/>
-                </div>
-                {/* <Empty
-                  image={Empty.PRESENTED_IMAGE_DEFAULT}
-                  imageStyle={{
-                    height: 60,
-                  }}
-                  description={<span>Form Not Available!</span>}
-                ></Empty> */}
-              </Tab>
-              <Tab eventKey="2" title="Reference">
-                {/* <h1>Reference</h1> */}
-                {/* <Empty
-                  image={Empty.PRESENTED_IMAGE_DEFAULT}
-                  imageStyle={{
-                    height: 60,
-                  }}
-                  description={<span>Reference Not Available!</span>}
-                ></Empty> */}
-                <div>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <ButtonGroup aria-label="Basic example">
-                      <Button
-                        disabled={pageNumber <= 1}
-                        onClick={previousPage}
-                        variant="dark"
-                      >
-                        <ChevronLeftOutlined />
-                      </Button>
-                      <Button variant="dark">
-                        {" "}
-                        Page {pageNumber || (numPages ? 1 : "--")} of{" "}
-                        {numPages || "--"}
-                      </Button>
-                      <Button
-                        disabled={pageNumber >= numPages}
-                        onClick={nextPage}
-                        variant="dark"
-                      >
-                        <ChevronRightOutlined />
-                      </Button>
-                    </ButtonGroup>
-                  </div>
-                  <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
-                    <Page pageNumber={pageNumber} />
-                  </Document>
-                </div>
-              </Tab>
-              <Tab eventKey="3" title="Description">
-                {/* <h1>Description</h1> */}
-                <Empty
-                  image={Empty.PRESENTED_IMAGE_DEFAULT}
-                  imageStyle={{
-                    height: 60,
-                  }}
-                  description={<span>Description Not Available!</span>}
-                ></Empty>
-              </Tab>
-            </Tabs>
+                </Tab>
+                <Tab eventKey="3" title="Description">
+                  {formDetails.description === "" ? (
+                    <div>
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_DEFAULT}
+                        imageStyle={{
+                          height: 100,
+                        }}
+                        description={<span>Description Not Available!</span>}
+                      ></Empty>
+                    </div>
+                  ) : (
+                    <div>{formDetails.description}</div>
+                  )}
+                </Tab>
+              </Tabs>
+            </div>
+          )}
+          <div style={{textAlign: 'right', marginBottom: '20px'}}>
+            Powered By <span style={{fontWeight: 'bold'}}>Form</span><span style={{fontWeight: 'bold', color: '#03ef62'}}>Easy</span>
           </div>
         </Content>
       </Layout>
