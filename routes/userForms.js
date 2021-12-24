@@ -22,6 +22,18 @@ router.get("/get/:id", async (req,res) => {
   }
 })
 
+
+router.get("/", auth, async (req,res) => {
+  try{
+    const { userId } = req.body;
+    const formData = await CustomForm.find({userId: userId}).select('formname isAccepting date');
+    res.send({data: formData, success: true, message: 'Forms fetched successfully!'});
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({success: false, message: 'Something went wrong'});
+  }
+})
+
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
     const { userId, username, formName, formCategory, description, visibility } = req.body;
