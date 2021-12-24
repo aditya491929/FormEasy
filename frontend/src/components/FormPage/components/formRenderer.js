@@ -3,6 +3,10 @@ import { Button } from "react-bootstrap";
 import $ from "jquery";
 import "../../authPage/nprogress.css";
 import extractResponses from "../responseExtractor";
+import axios from 'axios';
+import NProgress from "nprogress";
+import "../../authPage/nprogress.css";
+import { useToasts } from 'react-toast-notifications';
 
 window.jQuery = $;
 window.$ = $;
@@ -22,13 +26,15 @@ function debounce(fn, ms) {
   };
 }
 
-const FormRenderer = ( {formData} ) => {
+const FormRenderer = ( {formData, formId} ) => {
   const renderRef = createRef();
   const [formState, setFormState] = useState();
+  const [isSubmitting, setIsSubmitting ] = useState(false);
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
+  const {addToast} = useToasts();
 
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
@@ -50,9 +56,38 @@ const FormRenderer = ( {formData} ) => {
   }, []);
 
 
-  const handleSubmit = () => {
-    const response = window.JSON.stringify(extractResponses(($(renderRef.current).formRender("userData")))) 
-    alert(response);
+  const handleSubmit = async () => {
+    try{
+      setIsSubmitting(true);
+      NProgress.start();
+      const response = JSON.stringify(extractResponses(($(renderRef.current).formRender("userData"))))
+      const user = JSON.parse(localStorage.getItem('user'))
+      let data = {}
+      if(user){
+        data = {
+          "userId": user.id,
+          "data": response
+        }
+      }else{
+        data = {
+          "data": response
+        }
+      }
+      console.log(formId);
+      const result = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}forms/post/${formId}`, data);
+      if(result.data.success){
+        addToast(result.data.message, { appearance: 'success', autoDismiss: true, autoDismissTimeout: 2000 })
+        $(renderRef.current).formRender('clear');
+      }else{
+        addToast(result.data.message, { appearance: 'warning', autoDismiss: true, autoDismissTimeout: 2000 })
+      }
+      NProgress.done();
+    } catch(err){
+      console.log(err);
+      NProgress.done();
+      addToast(err, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 2000 })
+    } 
+    setIsSubmitting(false);
   };
 
 
@@ -77,8 +112,9 @@ const FormRenderer = ( {formData} ) => {
           variant="dark"
           id="saveData"
           onClick={handleSubmit}
+          disabled={isSubmitting}
         >
-          Submit
+          {!isSubmitting ? 'Submit' : 'Submitting'}
         </Button>
       </div>
     </div>

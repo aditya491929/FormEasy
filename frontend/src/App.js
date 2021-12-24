@@ -18,6 +18,7 @@ import routes from "./routes";
 import "./App.css";
 import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
 import CreatePage from "./components/Create/createPage";
+import MyFormPage from "./components/myforms/MyFormPage";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -141,6 +142,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/myforms" element={<Navigate to='/' />}/>
               <Route path="/form/:id" element={<FormPage />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
@@ -152,6 +154,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/dashboard/myforms" element={<MyFormPage/>}/>
                 <Route path="/form/:id" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
@@ -177,6 +180,7 @@ function App() {
               <Route path="/dashboard" element={<Navigate to='/' />}/>
               <Route path="/dashboard/upload" element={<Navigate to='/' />}/>
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
+              <Route path="/dashboard/myforms" element={<Navigate to='/' />}/>
               <Route path="/form/:id" element={<FormPage />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
@@ -188,6 +192,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />}/>
                 <Route path="/dashboard/upload" element={<UploadPage/>}/>
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
+                <Route path="/dashboard/myforms" element={<MyFormPage/>}/>
                 <Route path="/form/:id" element={<FormPage/>}/>
                 <Route path="/*" element={<Error />} />
               </Routes>

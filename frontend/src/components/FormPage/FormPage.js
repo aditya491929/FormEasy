@@ -209,7 +209,7 @@ const FormPage = () => {
                           }
                         ></Empty>
                       ) : (
-                        <FormRender formData={formData} />
+                        <FormRender formData={formData} formId={formDetails._id} />
                       )}
                     </div>
                   )}
