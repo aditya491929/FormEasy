@@ -39,9 +39,9 @@ router.post("/post/:id", async (req,res) => {
 })
 
 
-router.get("/", auth, async (req,res) => {
+router.get("/myforms", auth, async (req,res) => {
   try{
-    const { userId } = req.body;
+    const { userId } = req.query;
     let forms = await CustomForm.find({userId: userId}).select('formname isAccepting date');
     const responseCounts = forms.map(async(e)=>{
       let count = await Response.find({formid: e._id}).count();
@@ -52,10 +52,12 @@ router.get("/", auth, async (req,res) => {
     });
     const formData = forms.map((e,index)=>{
       return {
+        key: e._id,
         id: e._id,
+        formname: e.formname,
         date: e.date,
         isAccepting: e.isAccepting,
-        responseCount: counts[index]
+        responseCount: counts[index].toString()
       };
     });
     res.send({data: formData, success: true, message: 'Forms fetched successfully!'});

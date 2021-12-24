@@ -1,68 +1,88 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import SuiBox from "../../SuiBox";
 import SuiTypography from "../../SuiTypography";
-import { Table, Tag, Space, Switch, Button } from "antd";
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import { Table, Space, Switch, Button, Tooltip } from "antd";
+import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
+import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
 
 const MyFormsTable = () => {
-    
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const token = localStorage.getItem("auth-token");
+        const user = JSON.parse(localStorage.getItem("user"));
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_ENDPOINT}forms/myforms`,
+          {
+            params: {
+              userId: user.id,
+            },
+            headers: { "x-auth-token": token },
+          }
+        );
+        if (response.data.success) {
+          if (response.data.data) {
+            setData(response.data.data);
+            console.log(response.data.data);
+          }
+        } else {
+          console.log("Something went wwrong");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
 
-    }, [])
-
-    const data = [
-        {
-        formid: "1",
-        formname: "John Brown",
-        date: '21/12/21',
-        responses: ["50"],
-        },
-    ];
   const columns = [
     {
       title: "FormId",
-      dataIndex: "formid",
-      key: "formid",
+      dataIndex: "id",
+      key: "id",
+      render: (id) => <Link to={`/form/${id}`}>{id}</Link>,
     },
     {
       title: "FormName",
       dataIndex: "formname",
       key: "formname",
-      render: (text) => <a>{text}</a>,
     },
     {
       title: "Created On",
       dataIndex: "date",
       key: "date",
+      render: (date) => date.slice(0, 10),
     },
     {
       title: "Responses",
-      key: "responses",
-      dataIndex: "responses",
-      render: (tags) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
+      dataIndex: "responseCount",
+      key: "responseCount",
+      render: (responseCount) => (
+        <Tooltip placement="top" title={"Download CSV"}>
+          <Button type="primary" ghost>
+            {responseCount} Responses
+          </Button>
+        </Tooltip>
       ),
     },
     {
       title: "Accept Response",
-      key: "accept",
-      render: () => (
-        <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} defaultChecked />
+      dataIndex: "isAccepting",
+      key: "isAccepting",
+      render: (isAccepting) => (
+        <Switch
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          checked={isAccepting}
+        />
       ),
     },
     {
@@ -73,7 +93,7 @@ const MyFormsTable = () => {
           <Button danger>Delete Form</Button>
         </Space>
       ),
-    }
+    },
   ];
 
   return (
@@ -86,7 +106,7 @@ const MyFormsTable = () => {
         </SuiBox>
         <SuiBox p={2}>
           <SuiTypography variant="h6" fontWeight="medium">
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data} loading={isLoading} />
           </SuiTypography>
         </SuiBox>
       </Card>
