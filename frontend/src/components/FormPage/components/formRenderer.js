@@ -2,6 +2,7 @@ import { useState, createRef, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import $ from "jquery";
 import "../../authPage/nprogress.css";
+import extractResponses from "../responseExtractor";
 
 window.jQuery = $;
 window.$ = $;
@@ -50,7 +51,8 @@ const FormRenderer = ( {formData} ) => {
 
 
   const handleSubmit = () => {
-    alert(window.JSON.stringify($(renderRef.current).formRender("userData")));
+    const response = window.JSON.stringify(extractResponses(($(renderRef.current).formRender("userData")))) 
+    alert(response);
   };
 
 
