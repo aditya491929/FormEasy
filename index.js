@@ -16,6 +16,7 @@ const userRouter = require('./routes/userRoutes');
 const userFormRouter = require('./routes/userForms');
 const formCategoryRouter = require('./routes/categories');
 const customFormRouter = require('./routes/customForms');
+const responseRouter = require('./routes/responses');
 
 
 const app = express();
@@ -35,8 +36,7 @@ app.use('/users', userRouter);
 app.use('/forms', userFormRouter);
 app.use('/form', formCategoryRouter);
 app.use('/forms/create', customFormRouter);
-
-
+app.use('/responses', responseRouter);
 
 app.get('/', (req,res) => {
     res.send('HOME');

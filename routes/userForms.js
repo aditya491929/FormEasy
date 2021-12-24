@@ -38,6 +38,45 @@ router.post("/post/:id", async (req,res) => {
   }
 })
 
+router.put("/put/:id", auth, async(req,res) => {
+  try{
+    const {id} = req.params;
+    const {isAccepting} = req.body;
+    let updated = await CustomForm.findOneAndUpdate({_id: id}, {isAccepting: isAccepting}, {new:true});
+    res.send({success: true, message: "Accepting status changed!"});
+  }catch(error){
+    console.log(error);
+    res.status(500).send({success: false, message: 'Something went wrong!'})
+  }
+});
+
+router.delete("/delete/:id", auth, async (req,res) => {
+  try{
+    const { userId } = req.query;
+    let forms = await CustomForm.findOneAndDelete()
+    const responseCounts = forms.map(async(e)=>{
+      let count = await Response.find({formid: e._id}).count();
+      return count;
+    })
+    let counts = await Promise.all(responseCounts).then(function(results) {
+      return results
+    });
+    const formData = forms.map((e,index)=>{
+      return {
+        key: e._id,
+        id: e._id,
+        formname: e.formname,
+        date: e.date,
+        isAccepting: e.isAccepting,
+        responseCount: counts[index].toString()
+      };
+    });
+    res.send({data: formData, success: true, message: 'Forms fetched successfully!'});
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({success: false, message: 'Something went wrong'});
+  }
+})
 
 router.get("/myforms", auth, async (req,res) => {
   try{
@@ -66,6 +105,7 @@ router.get("/myforms", auth, async (req,res) => {
     res.status(500).send({success: false, message: 'Something went wrong'});
   }
 })
+
 
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {

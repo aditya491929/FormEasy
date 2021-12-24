@@ -23,6 +23,7 @@
     "formBuilder": "^3.7.3",
     "jquery": "^3.6.0",
     "jquery-ui-sortable": "^1.0.0",
+    "json-to-csv-export": "^1.0.2",
     "nprogress": "^0.2.0",
     "prop-types": "15.7.2",
     "react": "^17.0.2",
