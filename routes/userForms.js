@@ -4,21 +4,37 @@ const multer = require("multer");
 const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 const CustomForm = require("../models/customForm");
+const Response = require("../models/response");
 const auth = require('../middleware/auth');
 
 router.get("/get/:id", async (req,res) => {
   try{
     const {id} = req.params;
-    console.log(req.params)
     const formData = await CustomForm.findOne({ _id: id });
     if(formData.isAccepting){
       res.send({data: formData, success: true, message: 'Form accepting responses'});
     }else{
       res.send({data: formData, success: true, message: 'Form isn\'t accepting responses'})
     }
-  }catch(err){
-    console.log(err);
-    res.status(500).send({success: false, message: 'Something went wrong'})
+  }catch(error){
+    console.log(error);
+    res.status(500).send({success: false, message: 'Something went wrong!'})
+  }
+})
+
+router.post("/post/:id", async (req,res) => {
+  try{
+    const {id} = req.params;
+    const {userId, data} = req.body;
+    const response = new Response();
+    response.formid = id;
+    response.userid = userId;
+    response.response = data;
+    const result = await response.save();
+    res.send({success: true, message: "Response Recorded Successfully!", id: result._id});
+  }catch(error){
+    console.log(error);
+    res.status(500).send({success: false, message: 'Something went wrong!'})
   }
 })
 

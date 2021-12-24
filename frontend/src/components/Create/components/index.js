@@ -164,6 +164,9 @@ const DragDrop = () => {
           .form-actions {
             display: none !important;
           }
+          .formbuilder-icon-button{
+            display: none;
+          }
         `}
       </style>
       <Backdrop
