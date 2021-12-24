@@ -38,6 +38,33 @@ router.post("/post/:id", async (req,res) => {
   }
 })
 
+
+router.get("/", auth, async (req,res) => {
+  try{
+    const { userId } = req.body;
+    let forms = await CustomForm.find({userId: userId}).select('formname isAccepting date');
+    const responseCounts = forms.map(async(e)=>{
+      let count = await Response.find({formid: e._id}).count();
+      return count;
+    })
+    let counts = await Promise.all(responseCounts).then(function(results) {
+      return results
+    });
+    const formData = forms.map((e,index)=>{
+      return {
+        id: e._id,
+        date: e.date,
+        isAccepting: e.isAccepting,
+        responseCount: counts[index]
+      };
+    });
+    res.send({data: formData, success: true, message: 'Forms fetched successfully!'});
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({success: false, message: 'Something went wrong'});
+  }
+})
+
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
     const { userId, username, formName, formCategory, description, visibility } = req.body;
