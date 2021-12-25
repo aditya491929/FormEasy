@@ -19,6 +19,7 @@ import "./App.css";
 import { useNavController,  setMiniSidenav, setOpenConfigurator } from "./context/NavContext";
 import CreatePage from "./components/Create/createPage";
 import MyFormPage from "./components/myforms/MyFormPage";
+import ProfilePage from "./components/profile/profilePage";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -144,6 +145,7 @@ function App() {
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
               <Route path="/dashboard/myforms" element={<Navigate to='/' />}/>
               <Route path="/form/:id" element={<FormPage />}/>
+              <Route path="/dashboard/profile" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -156,6 +158,7 @@ function App() {
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
                 <Route path="/dashboard/myforms" element={<MyFormPage/>}/>
                 <Route path="/form/:id" element={<FormPage/>}/>
+                <Route path='/dashboard/profile' element={<ProfilePage />}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
@@ -182,6 +185,7 @@ function App() {
               <Route path="/dashboard/create" element={<Navigate to='/' />}/>
               <Route path="/dashboard/myforms" element={<Navigate to='/' />}/>
               <Route path="/form/:id" element={<FormPage />}/>
+              <Route path="/dashboard/profile" element={<Navigate to='/' />}/>
               <Route path="/*" element={<Error />} />
             </Routes>
             )
@@ -194,6 +198,7 @@ function App() {
                 <Route path="/dashboard/create" element={<CreatePage/>}/>
                 <Route path="/dashboard/myforms" element={<MyFormPage/>}/>
                 <Route path="/form/:id" element={<FormPage/>}/>
+                <Route path='/dashboard/profile' element={<ProfilePage />}/>
                 <Route path="/*" element={<Error />} />
               </Routes>
             )
