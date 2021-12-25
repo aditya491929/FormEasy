@@ -12,8 +12,11 @@ const Profile = () => {
     <DashboardLayout>
       <DashboardNavbar />
       <Grid container spacing={3} py={3}>
-        <Grid item lg={12} style={{minWidth: '100%', minHeight: '80vh'}}>
+        <Grid item xs={12} md={6} lg={5} style={{minHeight: '80vh'}}>
         <ProfileInfo />
+        </Grid>
+        <Grid item xs={12} md={6} lg={7}>
+            {/* <Projects /> */}
         </Grid>
       </Grid>
       <Footer />

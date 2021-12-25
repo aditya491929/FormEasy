@@ -123,7 +123,7 @@ function Uform() {
       </CornerDialog>
       <Card className="h-100">
         <SuiBox pt={3} px={3}>
-          <SuiTypography variant="h6" fontWeight="medium">
+          <SuiTypography variant="h6" fontWeight="bold">
             Reference Form Upload
           </SuiTypography>
           <SuiBox mt={0} mb={2}>

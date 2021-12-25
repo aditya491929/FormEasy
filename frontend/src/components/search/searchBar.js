@@ -44,8 +44,16 @@ function SearchBar() {
           .ant-drawer-content-wrapper{
             height: 70vh !important;
           }
+          .ant-input-affix-wrapper{
+            height: 40px !important;
+            border-radius: 10px 0px 0px 10px !important;
+          }
           .ant-input-affix-wrapper:hover{
             border-color: #03ef62 !important;
+          }
+          .ant-input-search-button{
+            height: 40px !important;
+            border-radius: 0px 10px 10px 0px !important;
           }
           .ant-input-search-button:hover{
             border-color: #03ef62 !important;
@@ -59,7 +67,7 @@ function SearchBar() {
           handleSearch(value, event);
           setBottomSheetState(true);
         }}
-        style={{ width: 300 }}
+        style={{ width: 325 }}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
