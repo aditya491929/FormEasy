@@ -8,19 +8,20 @@ const auth = require('../middleware/auth');
 
 router.post("/", auth, upload.array("image"), async (req, res) => {
   try {
-    const { userId, username, formName, formCategory, description, formData } = req.body;
+    const { userId, username, formName, formCategory, description, formData, visibility } = req.body;
     const form = new CustomForm();
     form.userId = userId;
     form.username = username;
     form.formname = formName;
     form.formCategory = formCategory;
     form.description = description;
+    form.isAccepting = visibility;
     form.formData = formData;
     if(req.files){
-      form.reference = req.files.map((f) => ({ url: f.path }));
+    form.reference = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
     }
-    await form.save();
-    res.send({ success: true, message: "Form Created Successfully!" });
+    const result = await form.save();
+    res.send({ success: true, message: "Form Created Successfully!", id: result._id});
   } catch (error) {
     console.log(error)
     res.status(500).send({ success: false, message: "Failed To Create Form!" });

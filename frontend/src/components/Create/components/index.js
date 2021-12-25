@@ -1,12 +1,13 @@
 import { useState, createRef, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Form, Card as CD, Button } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
 import { Steps, Result, Empty, Button as Btn, Upload } from "antd";
+import { CornerDialog } from "evergreen-ui";
 import { UploadOutlined } from "@ant-design/icons";
-import {
-  FormOutlined,
-  CheckOutlined,
-} from "@ant-design/icons";
+import { FormOutlined, CheckOutlined } from "@ant-design/icons";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import axios from "axios";
 import $ from "jquery";
 import Card from "@mui/material/Card";
@@ -15,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import NProgress from "nprogress";
 import "../../authPage/nprogress.css";
 import SuiTypography from "../../SuiTypography";
+import QRCode from "react-qr-code";
 const { Step } = Steps;
 
 window.jQuery = $;
@@ -45,6 +47,9 @@ const DragDrop = () => {
   const [formState, setFormState] = useState();
   const [formName, setFormName] = useState();
   const [formCategory, setFormCategory] = useState();
+  const [formVisibility, setFormVisibility] = useState(true);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [formid, setFormid] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [dimensions, setDimensions] = useState({
@@ -71,6 +76,11 @@ const DragDrop = () => {
     setFormState(form);
   }, []);
 
+  const showModal = (formId) => {
+    setFormid(formId);
+    setModalVisibility(true);
+  };
+
   const [file, setFile] = useState({
     fileList: [],
   });
@@ -91,7 +101,7 @@ const DragDrop = () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     let data = new FormData();
-    if(file.fileList.length > 0){
+    if (file.fileList.length > 0) {
       for (let i = 0; i < file.fileList.length; i++) {
         data.append("image", file.fileList[i].originFileObj);
       }
@@ -101,6 +111,7 @@ const DragDrop = () => {
     data.append("formName", formName);
     data.append("formCategory", formCategory);
     data.append("description", formDescriptionRef.current.value);
+    data.append("visibility", formVisibility);
     data.append("formData", formData);
 
     axios
@@ -122,6 +133,7 @@ const DragDrop = () => {
           NProgress.done();
           setIsSuccess(true);
           setStep("3");
+          showModal(res.data.id);
         } else {
           console.log("Failed");
           addToast(res.data.message, {
@@ -152,6 +164,9 @@ const DragDrop = () => {
           .form-actions {
             display: none !important;
           }
+          .formbuilder-icon-button{
+            display: none;
+          }
         `}
       </style>
       <Backdrop
@@ -160,6 +175,16 @@ const DragDrop = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      <CornerDialog
+        title="Form QR Code (Click to Preview Form)"
+        isShown={modalVisibility}
+        onCloseComplete={() => setModalVisibility(false)}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <Link to={`/form/${formid}`}>
+          <QRCode value={`http://localhost:3000/form/${formid}`} />
+        </Link>
+      </CornerDialog>
       <SuiTypography variant="h6" fontWeight="medium">
         {dimensions.width > 1000 ? (
           <Card className="h-100">
@@ -289,6 +314,22 @@ const DragDrop = () => {
                             <Btn icon={<UploadOutlined />}>Upload</Btn>
                           </Upload>
                         </Form.Group>
+                        <FormControlLabel
+                          style={{ padding: "0px 0px 5px 10px" }}
+                          control={
+                            <Switch
+                              checked={formVisibility}
+                              onChange={() => {
+                                setFormVisibility(!formVisibility);
+                              }}
+                            />
+                          }
+                          label={
+                            formVisibility
+                              ? "Accepting Response!"
+                              : "Not Accepting Response!"
+                          }
+                        />
                       </Form>
                       <Button
                         variant="dark"

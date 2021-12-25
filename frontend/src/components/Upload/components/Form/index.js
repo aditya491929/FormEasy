@@ -1,21 +1,29 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import SuiBox from "../../../SuiBox";
 import SuiTypography from "../../../SuiTypography";
 import { Upload, Button as Btn } from "antd";
+import {CornerDialog} from 'evergreen-ui';
 import { UploadOutlined } from "@ant-design/icons";
 import NProgress from "nprogress";
 import "../../../authPage/nprogress.css";
 import { useToasts } from "react-toast-notifications";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import QRCode from "react-qr-code";
 
 function Uform() {
   const [formName, setFormName] = useState("");
   const [formCategory, setFormCategory] = useState("");
+  const [formVisibility, setFormVisibility] = useState(true);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [formid, setFormid] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formDescriptionRef = useRef();
   const { addToast } = useToasts();
@@ -26,6 +34,11 @@ function Uform() {
 
   const categoryChangeHandler = (e) => {
     setFormCategory(e.target.value);
+  };
+
+  const showModal = (formId) => {
+    setFormid(formId);
+    setModalVisibility(true);
   };
 
   const [file, setFile] = useState({
@@ -53,6 +66,7 @@ function Uform() {
     formData.append("username", user.username);
     formData.append("formName", formName);
     formData.append("formCategory", formCategory);
+    formData.append("visibility", formVisibility);
     formData.append("description", formDescriptionRef.current.value);
     axios
       .post(`${process.env.REACT_APP_API_ENDPOINT}forms/upload`, formData, {
@@ -70,6 +84,7 @@ function Uform() {
             autoDismissTimeout: 2000,
           });
           NProgress.done();
+          showModal(res.data.id);
         } else {
           addToast(res.data.message, {
             appearance: "error",
@@ -100,6 +115,16 @@ function Uform() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+       <CornerDialog
+        title="Form QR Code (Click to Preview Form)"
+        isShown={modalVisibility}
+        onCloseComplete={() => setModalVisibility(false)}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <Link to={`/form/${formid}`}>
+          <QRCode value={`http://localhost:3000/form/${formid}`} />
+        </Link>
+      </CornerDialog>
       <Card className="h-100">
         <SuiBox pt={3} px={3}>
           <SuiTypography variant="h6" fontWeight="medium">
@@ -189,6 +214,22 @@ function Uform() {
               <Form.Group className="mb-3" controlId="uploadFormBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
+              <FormControlLabel
+                style={{ padding: "0px 0px 5px 10px" }}
+                control={
+                  <Switch
+                    checked={formVisibility}
+                    onChange={() => {
+                      setFormVisibility(!formVisibility);
+                    }}
+                  />
+                }
+                label={
+                  formVisibility
+                    ? "Accepting Response!"
+                    : "Not Accepting Response!"
+                }
+              />
               <Button
                 variant="dark"
                 type="submit"
