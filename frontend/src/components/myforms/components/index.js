@@ -35,7 +35,6 @@ const MyFormsTable = () => {
         if (response.data.success) {
           if (response.data.data) {
             setData(response.data.data);
-            console.log(response.data.data);
           }
         } else {
           console.log("Something went wwrong");
@@ -124,7 +123,7 @@ const MyFormsTable = () => {
     setIsDeleting(true);
     try {
       const token = localStorage.getItem('auth-token');
-      const response = await axios.get(
+      const response = await axios.delete(
         `${process.env.REACT_APP_API_ENDPOINT}forms/delete/${id}`,
         {
           headers: { "x-auth-token": token },

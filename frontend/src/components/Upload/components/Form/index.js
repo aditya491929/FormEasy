@@ -4,8 +4,6 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import SuiBox from "../../../SuiBox";
 import SuiTypography from "../../../SuiTypography";
 import { Upload, Button as Btn } from "antd";
@@ -21,7 +19,6 @@ import QRCode from "react-qr-code";
 function Uform() {
   const [formName, setFormName] = useState("");
   const [formCategory, setFormCategory] = useState("");
-  const [formVisibility, setFormVisibility] = useState(true);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [formid, setFormid] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,7 +63,6 @@ function Uform() {
     formData.append("username", user.username);
     formData.append("formName", formName);
     formData.append("formCategory", formCategory);
-    formData.append("visibility", formVisibility);
     formData.append("description", formDescriptionRef.current.value);
     axios
       .post(`${process.env.REACT_APP_API_ENDPOINT}forms/upload`, formData, {
@@ -214,22 +210,6 @@ function Uform() {
               <Form.Group className="mb-3" controlId="uploadFormBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
-              <FormControlLabel
-                style={{ padding: "0px 0px 5px 10px" }}
-                control={
-                  <Switch
-                    checked={formVisibility}
-                    onChange={() => {
-                      setFormVisibility(!formVisibility);
-                    }}
-                  />
-                }
-                label={
-                  formVisibility
-                    ? "Accepting Response!"
-                    : "Not Accepting Response!"
-                }
-              />
               <Button
                 variant="dark"
                 type="submit"

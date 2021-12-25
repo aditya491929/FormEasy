@@ -52,7 +52,7 @@ router.put("/put/:id", auth, async(req,res) => {
   }
 });
 
-router.get("/delete/:id", auth, async (req,res) => {
+router.delete("/delete/:id", auth, async (req,res) => {
   try{
     const { id } = req.params;
     let form = await CustomForm.findOneAndDelete({_id: id})
@@ -99,13 +99,13 @@ router.get("/myforms", auth, async (req,res) => {
 
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
-    const { userId, username, formName, formCategory, description, visibility } = req.body;
+    const { userId, username, formName, formCategory, description } = req.body;
     const form = new CustomForm();
     form.userId = userId;
     form.username = username;
     form.formname = formName;
     form.formCategory = formCategory;
-    form.isAccepting = visibility;
+    // form.isAccepting = visibility;
     form.description = description;
     form.reference = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
     const result = await form.save();

@@ -64,6 +64,9 @@ const Secure = () => {
     <>
       <style type="text/css">
         {`
+          .ant-layout{
+            min-height: 90vh;
+          }
           .ant-tabs-ink-bar {
             background-color: #03ef62;
           }
@@ -118,9 +121,7 @@ const Secure = () => {
                 {category === "" ? (
                   <Categories categorySelectHandler={onCategorySelect} />
                 ) : (
-                  <CategoryTemplate
-                    categoryName={category}
-                  />
+                  <CategoryTemplate categoryName={category} />
                 )}
               </TabPane>
               <TabPane tab="Favorites" key="2">

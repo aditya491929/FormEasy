@@ -10,6 +10,18 @@ router.get('/categories', auth, async (req,res) => {
     res.send(data)
 })
 
+router.get('/categories/:category', auth, async (req,res) => {
+  try{
+    const {category} = req.params;
+    const categoryCard = await Category.find({name: category});
+    const data = await CustomForm.find({formCategory: category});
+    res.send({success: true, message: 'Data Fetched Successfully', card: categoryCard, data: data});
+  }catch(err){
+    console.log(err);
+    res.append.status(500).send({success: false, message: 'Something Went Wrong!'});
+  }
+})
+
 router.get("/search", async (req,res) => {
     try{
       const { key } = url.parse(req.url, true).query;
