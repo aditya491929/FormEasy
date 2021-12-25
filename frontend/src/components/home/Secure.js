@@ -8,6 +8,8 @@ import Categories from "./Categories";
 import CategoryTemplate from "./Category/CategoryTemplate";
 import MyForms from "./MyForms";
 import Favorites from "./Favorites";
+import SearchBar from "../search/searchBar";
+
 const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
@@ -110,6 +112,7 @@ const Secure = () => {
               <Breadcrumb.Item>Favorites</Breadcrumb.Item>
             )}
           </Breadcrumb>
+          <SearchBar />
           <div className="site-layout-content">
             <Tabs
               onChange={(activeKey) => {

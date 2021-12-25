@@ -37,6 +37,14 @@ const routes = [
     noCollapse: true,
   },
   { type: "title", title: "Profile", key: "my-profile" },
+  {
+    type:"collapse",
+    name: "Profile",
+    key:"profile",
+    route: "/dashboard/profile",
+    icon: <Document size="12px" />,
+    noCollapse: true,
+  },
 
 ];
 
