@@ -25,7 +25,6 @@ router.get('/categories/:category', auth, async (req,res) => {
 router.get("/search", async (req,res) => {
     try{
       const { key } = url.parse(req.url, true).query;
-      console.log(key);
       const formData = await CustomForm.find({
         $or: [ {formname : { $regex: key, $options: 'i' }}, { description: { $regex: key, $options: 'i' } } ]
       });

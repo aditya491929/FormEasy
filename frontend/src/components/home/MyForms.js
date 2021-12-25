@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import { Empty } from "antd";
+import { Empty, Tooltip } from "antd";
 import { CalendarOutlined, IdcardOutlined } from "@ant-design/icons";
 import { Pill, EyeOffIcon, EyeOpenIcon, CrossIcon } from "evergreen-ui";
 import Grow from "@mui/material/Grow";
@@ -85,6 +85,7 @@ const MyForms = () => {
                   lg={4}
                   xl={3}
                   style={{ display: "flex", justifyContent: "center" }}
+                  key={form.id}
                 >
                   <Card style={{ width: "18rem" }}>
                     <Card.Body>
@@ -153,11 +154,17 @@ const MyForms = () => {
                             color="red"
                           >
                             {form.isAccepting === true ? (
-                              <EyeOpenIcon />
+                              <Tooltip placement="top" title={'Form Accepting Response!'}>
+                                <EyeOpenIcon />
+                              </Tooltip>
                             ) : form.isAccepting === false ? (
-                              <EyeOffIcon />
+                              <Tooltip placement="top" title={'Form Not Accepting Response!'}>
+                                <EyeOffIcon />
+                              </Tooltip>
                             ) : (
-                              <CrossIcon />
+                              <Tooltip placement="top" title={'No Form Available!'}>
+                                <CrossIcon />
+                              </Tooltip>
                             )}
                           </Pill>
                         </Card.Subtitle>

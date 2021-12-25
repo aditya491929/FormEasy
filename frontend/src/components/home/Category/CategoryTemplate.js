@@ -125,6 +125,7 @@ const CategoryTemplate = (props) => {
                   lg={4}
                   xl={3}
                   style={{ display: "flex", justifyContent: "center" }}
+                  key={form._id}
                 >
                   <Card style={{ width: "18rem" }}>
                     <Card.Body>
@@ -196,11 +197,17 @@ const CategoryTemplate = (props) => {
                             color="red"
                           >
                             {form.isAccepting === true ? (
+                              <Tooltip placement="top" title={'Form Accepting Response!'}>
                               <EyeOpenIcon />
+                            </Tooltip>
                             ) : form.isAccepting === false ? (
-                              <EyeOffIcon />
+                              <Tooltip placement="top" title={'Form Not Accepting Response!'}>
+                                <EyeOffIcon />
+                              </Tooltip>
                             ) : (
-                              <CrossIcon />
+                              <Tooltip placement="top" title={'No Form Available!'}>
+                                <CrossIcon />
+                              </Tooltip>
                             )}
                           </Pill>
                         </Card.Subtitle>
