@@ -94,14 +94,9 @@ function Footer({ aditya, aayush, rahul , links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  aditya: { href: "https://www.github.com/", name: "Aditya"},
-  aayush: { href: "https://www.github.com/", name: "Aayush"},
-  rahul: { href: "https://www.github.com/", name: "Rahul" },
-  
-  links: [
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
-  ],
+  aditya: { href: "https://www.github.com/aditya491929", name: "Aditya"},
+  aayush: { href: "https://www.github.com/aayushOz11", name: "Aayush"},
+  rahul: { href: "https://www.github.com/RahulPanchal-15", name: "Rahul" },
 };
 
 // Typechecking props for the Footer
@@ -109,7 +104,6 @@ Footer.propTypes = {
   aditya: PropTypes.objectOf(PropTypes.string),
   aayush: PropTypes.objectOf(PropTypes.string),
   rahul: PropTypes.objectOf(PropTypes.string),
-  links: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Footer;
