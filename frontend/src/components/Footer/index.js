@@ -1,31 +1,17 @@
 import PropTypes from "prop-types";
 
-// @mui material components
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
-// Soft UI Dashboard PRO React components
 import SuiBox from "../SuiBox";
 import SuiTypography from "../SuiTypography";
 
-// Soft UI Dashboard PRO React base styles
 import typography from "../../assets/theme/base/typography";
 
 function Footer({ aditya, aayush, rahul , links }) {
 
 
   const { size } = typography;
-
-  const renderLinks = () =>
-    links.map((link) => (
-      <SuiBox key={link.name} component="li" px={2} lineHeight={1}>
-        <Link href={link.href} target="_blank">
-          <SuiTypography variant="button" fontWeight="regular" color="text">
-            {link.name}
-          </SuiTypography>
-        </Link>
-      </SuiBox>
-    ));
 
   return (
     <SuiBox
@@ -86,20 +72,17 @@ function Footer({ aditya, aayush, rahul , links }) {
           },
         })}
       >
-        {renderLinks()}
       </SuiBox>
     </SuiBox>
   );
 }
 
-// Setting default values for the props of Footer
 Footer.defaultProps = {
   aditya: { href: "https://www.github.com/aditya491929", name: "Aditya"},
   aayush: { href: "https://www.github.com/aayushOz11", name: "Aayush"},
   rahul: { href: "https://www.github.com/RahulPanchal-15", name: "Rahul" },
 };
 
-// Typechecking props for the Footer
 Footer.propTypes = {
   aditya: PropTypes.objectOf(PropTypes.string),
   aayush: PropTypes.objectOf(PropTypes.string),
