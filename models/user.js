@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
             filename: String,
         }
     ],
+    favourites: [{
+        type: mongoose.Schema.ObjectId,
+        }
+    ],
     date: {
         type: Date,
         default: Date.now(),
