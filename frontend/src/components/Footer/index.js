@@ -1,33 +1,12 @@
 import PropTypes from "prop-types";
-
-// @mui material components
 import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
-
-// Soft UI Dashboard PRO React components
 import SuiBox from "../SuiBox";
 import SuiTypography from "../SuiTypography";
-
-// Soft UI Dashboard PRO React base styles
 import typography from "../../assets/theme/base/typography";
 
-function Footer({ aditya, aayush, rahul , links }) {
-
-
+function Footer({ aditya, aayush, rahul }) {
   const { size } = typography;
-
-  const renderLinks = () =>
-    links.map((link) => (
-      <SuiBox key={link.name} component="li" px={2} lineHeight={1}>
-        <Link href={link.href} target="_blank">
-          <SuiTypography variant="button" fontWeight="regular" color="text">
-            {link.name}
-          </SuiTypography>
-        </Link>
-      </SuiBox>
-    ));
-
-  return (
+   return (
     <SuiBox
       width="100%"
       display="flex"
@@ -45,13 +24,7 @@ function Footer({ aditya, aayush, rahul , links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made with
-        <SuiBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
-          <Icon color="inherit" fontSize="inherit">
-            favorite
-          </Icon>
-        </SuiBox>
-        by
+        &copy; {new Date().getFullYear()}, made by
         <Link href={aditya.href} target="_blank">
           <SuiTypography variant="button" fontWeight="medium">
             &nbsp;{aditya.name}&nbsp;
@@ -67,39 +40,17 @@ function Footer({ aditya, aayush, rahul , links }) {
             &nbsp;{rahul.name}&nbsp;
           </SuiTypography>
         </Link>
-        for a better web.
-      </SuiBox>
-      <SuiBox
-        component="ul"
-        sx={({ breakpoints }) => ({
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          listStyle: "none",
-          mt: 3,
-          mb: 0,
-          p: 0,
-
-          [breakpoints.up("lg")]: {
-            mt: 0,
-          },
-        })}
-      >
-        {renderLinks()}
       </SuiBox>
     </SuiBox>
-  );
+   );
 }
 
-// Setting default values for the props of Footer
 Footer.defaultProps = {
   aditya: { href: "https://www.github.com/aditya491929", name: "Aditya"},
   aayush: { href: "https://www.github.com/aayushOz11", name: "Aayush"},
   rahul: { href: "https://www.github.com/RahulPanchal-15", name: "Rahul" },
 };
 
-// Typechecking props for the Footer
 Footer.propTypes = {
   aditya: PropTypes.objectOf(PropTypes.string),
   aayush: PropTypes.objectOf(PropTypes.string),

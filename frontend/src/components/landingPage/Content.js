@@ -67,7 +67,7 @@ const Content = () => {
       resources: [
         {
           name: "Aayush Malde (1911090)",
-          link: "/https://github.com/aditya491929/FormEasy",
+          link: "https://github.com/aditya491929/FormEasy",
         },
         {
           name: "Aditya Malwade (1911091)",

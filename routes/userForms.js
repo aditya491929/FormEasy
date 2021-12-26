@@ -97,12 +97,17 @@ router.get("/myforms", auth, async (req, res) => {
   }
 })
 
-
-router.post("/favourites", auth, async (req, res) => {
+router.put("/favourites", auth, async (req, res) => {
   try {
     const { formId, userId } = req.body;
-    let fav = await User.findOneAndUpdate({ _id: userId },{ $push: { favourites: formId } });
-    res.send({ data: fav, success: true, message: "Added to Favourites!"});
+    let isFav = await User.find({$and: [{id: userId},{ favourites: { $in: [formId] }}]});
+    if(isFav.length > 0){
+      let fav = await User.findOneAndUpdate({ _id: userId },{ $pull: { favourites: formId } });
+      res.send({ data: fav, success: true, message: "Removed From Favorites!"});
+    }else{
+      let fav = await User.findOneAndUpdate({ _id: userId },{ $push: { favourites: formId } });
+      res.send({ data: fav, success: true, message: "Added To Favorites!"});
+    }
   } catch (err) {
     res.status(500).send({ success: false, message: "Something went wrong"});
   }
@@ -111,8 +116,7 @@ router.post("/favourites", auth, async (req, res) => {
 router.get("/favourites", auth, async (req, res) => {
   try {
     const { userId } = req.query;
-    // console.log(userId);
-    let fav = await User.find({ _id: userId }).select('favourites');
+    let fav = await User.findById( userId ).select('favourites');
     console.log(fav);
     res.send({ data: fav, success: true, message: "Favourites fetched successfully!"});
   } catch (err) {
@@ -123,8 +127,7 @@ router.get("/favourites", auth, async (req, res) => {
 router.get("/isfavourite", auth, async(req,res) => {
   try {
     const { userId,formId } = req.query;
-    let fav = await User.find({$and: [{id: userId},{ favourites: { $in: [formId] }}]});
-    console.log(fav);
+    let fav = await User.find({$and: [{_id: userId},{ favourites: { $in: [formId] }}]});
     if(fav.length > 0){
       res.send({ data: true, success: true, message: "It is favourite!"});
     } else {
@@ -143,7 +146,6 @@ router.post("/upload", auth, upload.array("image"), async (req, res) => {
     form.username = username;
     form.formname = formName;
     form.formCategory = formCategory;
-    // form.isAccepting = visibility;
     form.description = description;
     form.reference = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
     const result = await form.save();
