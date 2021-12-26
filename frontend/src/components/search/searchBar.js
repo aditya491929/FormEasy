@@ -51,11 +51,17 @@ function SearchBar() {
           .ant-input-affix-wrapper:hover{
             border-color: #03ef62 !important;
           }
+          .ant-input-affix-wrapper:focus{
+            border-color: #03ef62 !important;
+          }
           .ant-input-search-button{
             height: 40px !important;
             border-radius: 0px 10px 10px 0px !important;
           }
           .ant-input-search-button:hover{
+            border-color: #03ef62 !important;
+          }
+          .ant-input-affix-wrapper:focus{
             border-color: #03ef62 !important;
           }
         `}
