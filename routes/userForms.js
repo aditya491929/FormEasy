@@ -5,8 +5,10 @@ const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 const CustomForm = require("../models/customForm");
 const Response = require("../models/response");
+const User = require('../models/user');
 const auth = require('../middleware/auth');
-const User = require("../models/user");
+const cloudinary = require('cloudinary');
+const mongoose = require('mongoose');
 
 router.get("/get/:id", async (req, res) => {
   try {
@@ -51,29 +53,17 @@ router.put("/put/:id", auth, async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", auth, async (req, res) => {
-  try {
-    const { userId } = req.query;
-    let forms = await CustomForm.findOneAndDelete()
-    const responseCounts = forms.map(async (e) => {
-      let count = await Response.find({ formid: e._id }).count();
-      return count;
-    })
-    let counts = await Promise.all(responseCounts).then(function (results) {
-      return results
-    });
-    const formData = forms.map((e, index) => {
-      return {
-        key: e._id,
-        id: e._id,
-        formname: e.formname,
-        date: e.date,
-        isAccepting: e.isAccepting,
-        responseCount: counts[index].toString()
-      };
-    });
-    res.send({ data: formData, success: true, message: 'Forms fetched successfully!' });
-  } catch (err) {
+router.delete("/delete/:id", auth, async (req,res) => {
+  try{
+    const { id } = req.params;
+    let form = await CustomForm.findOneAndDelete({_id: id})
+    let response = await Response.deleteMany({formid: mongoose.Types.ObjectId(id)})
+    if(form.reference.length){
+      console.log(form.reference[0].publicId)
+      let result = await cloudinary.v2.uploader.destroy(form.reference[0].publicId, resource_type='pdf', function(err,res) {console.log(res,err)})
+    }
+    res.send({ success: true, message: 'Forms Deleted Successfully!'});
+  } catch(err) {
     console.error(err);
     res.status(500).send({ success: false, message: 'Something went wrong' });
   }
@@ -107,12 +97,17 @@ router.get("/myforms", auth, async (req, res) => {
   }
 })
 
-
-router.post("/favourites", auth, async (req, res) => {
+router.put("/favourites", auth, async (req, res) => {
   try {
     const { formId, userId } = req.body;
-    let fav = await User.findOneAndUpdate({ _id: userId },{ $push: { favourites: formId } });
-    res.send({ data: fav, success: true, message: "Added to Favourites!"});
+    let isFav = await User.find({$and: [{id: userId},{ favourites: { $in: [formId] }}]});
+    if(isFav.length > 0){
+      let fav = await User.findOneAndUpdate({ _id: userId },{ $pull: { favourites: formId } });
+      res.send({ data: fav, success: true, message: "Removed From Favorites!"});
+    }else{
+      let fav = await User.findOneAndUpdate({ _id: userId },{ $push: { favourites: formId } });
+      res.send({ data: fav, success: true, message: "Added To Favorites!"});
+    }
   } catch (err) {
     res.status(500).send({ success: false, message: "Something went wrong"});
   }
@@ -121,8 +116,7 @@ router.post("/favourites", auth, async (req, res) => {
 router.get("/favourites", auth, async (req, res) => {
   try {
     const { userId } = req.query;
-    // console.log(userId);
-    let fav = await User.find({ _id: userId }).select('favourites');
+    let fav = await User.findById( userId ).select('favourites');
     console.log(fav);
     res.send({ data: fav, success: true, message: "Favourites fetched successfully!"});
   } catch (err) {
@@ -133,8 +127,7 @@ router.get("/favourites", auth, async (req, res) => {
 router.get("/isfavourite", auth, async(req,res) => {
   try {
     const { userId,formId } = req.query;
-    let fav = await User.find({$and: [{id: userId},{ favourites: { $in: [formId] }}]});
-    console.log(fav);
+    let fav = await User.find({$and: [{_id: userId},{ favourites: { $in: [formId] }}]});
     if(fav.length > 0){
       res.send({ data: true, success: true, message: "It is favourite!"});
     } else {
@@ -147,15 +140,14 @@ router.get("/isfavourite", auth, async(req,res) => {
 
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
-    const { userId, username, formName, formCategory, description, visibility } = req.body;
+    const { userId, username, formName, formCategory, description } = req.body;
     const form = new CustomForm();
     form.userId = userId;
     form.username = username;
     form.formname = formName;
     form.formCategory = formCategory;
-    form.isAccepting = visibility;
     form.description = description;
-    form.reference = req.files.map((f) => ({ url: f.path }));
+    form.reference = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
     const result = await form.save();
     res.send({ success: true, message: "Form Uploaded Successfully!", id: result._id });
   } catch (error) {

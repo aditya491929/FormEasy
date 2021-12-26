@@ -14,6 +14,7 @@ const MyFormsTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -34,7 +35,6 @@ const MyFormsTable = () => {
         if (response.data.success) {
           if (response.data.data) {
             setData(response.data.data);
-            console.log(response.data.data);
           }
         } else {
           console.log("Something went wwrong");
@@ -45,7 +45,7 @@ const MyFormsTable = () => {
       setIsLoading(false);
     }
     fetchData();
-  }, [isUpdating]);
+  }, [isUpdating, isDeleting]);
 
   const onChangeHandler = async (id, status) => {
     setIsUpdating(true);
@@ -119,6 +119,40 @@ const MyFormsTable = () => {
     setIsDownloading(false);
   };
 
+  const onDelete = async(id) => {
+    setIsDeleting(true);
+    try {
+      const token = localStorage.getItem('auth-token');
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_ENDPOINT}forms/delete/${id}`,
+        {
+          headers: { "x-auth-token": token },
+        }
+      );
+      console.log(response)
+      if (response.data.success) {
+        addToast(response.data.message, {
+          appearance: "success",
+          autoDismiss: true,
+          autoDismissTimeout: 2000,
+        });
+      } else {
+        addToast(response.data.message, {
+          appearance: "warning",
+          autoDismiss: true,
+          autoDismissTimeout: 2000,
+        });
+      }
+    } catch (err) {
+      addToast(err, {
+        appearance: "error",
+        autoDismiss: true,
+        autoDismissTimeout: 2000,
+      });
+    }
+    setIsDeleting(false);
+  }
+
   const columns = [
     {
       title: "FormId",
@@ -166,9 +200,9 @@ const MyFormsTable = () => {
     {
       title: "Actions",
       key: "delete",
-      render: () => (
+      render: (_,record) => (
         <Space size="middle">
-          <Button danger>Delete Form</Button>
+          <Button danger onClick={() => onDelete(record.key)} disabled={isDeleting}>Delete Form</Button>
         </Space>
       ),
     },

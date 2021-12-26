@@ -2,12 +2,21 @@ import Shop from "./Icons/Shop";
 import Document from "./Icons/Document";
 
 const routes = [
+  { type: "title", title: "Profile", key: "my-profile" },
   {
     type: "collapse",
     name: "Dashboard",
     key: "dashboard",
     route: "/dashboard",
     icon: <Shop size="12px" />,
+    noCollapse: true,
+  },
+  {
+    type:"collapse",
+    name: "Profile",
+    key:"profile",
+    route: "/dashboard/profile",
+    icon: <Document size="12px" />,
     noCollapse: true,
   },
   {
@@ -36,7 +45,6 @@ const routes = [
     icon: <Document size="12px" />,
     noCollapse: true,
   },
-  { type: "title", title: "Profile", key: "my-profile" },
 
 ];
 

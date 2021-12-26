@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Breadcrumb, Empty } from "antd";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Tabs, Tab, Button, ButtonGroup } from "react-bootstrap";
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRightOutlined, ChevronLeftOutlined } from "@mui/icons-material";
@@ -27,7 +28,9 @@ const FormPage = () => {
   const [formData, setFormData] = useState("");
   const [formDetails, setFormDetails] = useState("");
   const [url, setUrl] = useState("");
+  const [isFavourite, setIsFavourite] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -84,12 +87,59 @@ const FormPage = () => {
         );
       }
       setFormDetails(response.data.data);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = localStorage.getItem("auth-token");
+      const isFavResponse = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}forms/isfavourite`,
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+          params: {
+            userId: user.id,
+            formId: formId,
+          },
+        }
+      );
+      if (isFavResponse.data.success) {
+        setIsFavourite(isFavResponse.data.data);
+      } else {
+        console.log("Something Went Wrong!");
+      }
       setLoading(false);
     } else {
       alert(response.data.message);
       setLoading(false);
     }
-  }, []);
+  }, [isFavourite]);
+
+  const onClickHandler = async () => {
+    setUpdating(true);
+    let formId = window.location.href.split("/").pop();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("auth-token");
+    const data = {
+      formId: formId,
+      userId: user.id,
+    };
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_ENDPOINT}forms/favourites`,
+        data,
+        {
+          headers: { "x-auth-token": token },
+        }
+      );
+      if (response.data.success) {
+        setIsFavourite(response.data.data);
+      } else {
+        console.log("Something Went Wrong!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setUpdating(false);
+  };
 
   return (
     <>
@@ -136,21 +186,48 @@ const FormPage = () => {
               : { padding: "0 50px", maxWidth: "750px" }
           }
         >
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Breadcrumb style={{ margin: "16px 0" }}>
+              <Breadcrumb.Item
+                onClick={() => {
+                  history("/home");
+                }}
+              >
+                FormEasy
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>{formDetails.formname}</Breadcrumb.Item>
+              {tabId === "1" && <Breadcrumb.Item>Form</Breadcrumb.Item>}
+              {tabId === "2" && (
+                <Breadcrumb.Item>Form Reference</Breadcrumb.Item>
+              )}
+              {tabId === "3" && (
+                <Breadcrumb.Item>Form Description</Breadcrumb.Item>
+              )}
+            </Breadcrumb>
+            <Button
+              size="sm"
+              style={{ alignSelf: "center" }}
+              variant="dark"
               onClick={() => {
-                history("/home");
+                onClickHandler();
               }}
+              disabled={updating}
             >
-              FormEasy
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{formDetails.formname}</Breadcrumb.Item>
-            {tabId === "1" && <Breadcrumb.Item>Form</Breadcrumb.Item>}
-            {tabId === "2" && <Breadcrumb.Item>Form Reference</Breadcrumb.Item>}
-            {tabId === "3" && (
-              <Breadcrumb.Item>Form Description</Breadcrumb.Item>
-            )}
-          </Breadcrumb>
+              {isFavourite ? 
+              (
+                <>
+                <HeartOutlined style={{verticalAlign: 'middle'}}/>
+                {" Remove From Favourite"} 
+                </>
+              )
+              : (
+              <>
+              <HeartFilled style={{verticalAlign: 'middle'}}/>
+              {" Add to favourite"}
+              </>
+              )}
+            </Button>
+          </div>
           {loading && (
             <div
               className="site-layout-content"
@@ -209,13 +286,16 @@ const FormPage = () => {
                           }
                         ></Empty>
                       ) : (
-                        <FormRender formData={formData} formId={formDetails._id} />
+                        <FormRender
+                          formData={formData}
+                          formId={formDetails._id}
+                        />
                       )}
                     </div>
                   )}
                 </Tab>
                 <Tab eventKey="2" title="Reference">
-                  {url === "" && 
+                  {url === "" && (
                     <Empty
                       image={Empty.PRESENTED_IMAGE_DEFAULT}
                       imageStyle={{
@@ -223,13 +303,16 @@ const FormPage = () => {
                       }}
                       description={<span>Reference Not Available!</span>}
                     ></Empty>
-                  } 
-                  { url !== '' &&
+                  )}
+                  {url !== "" && (
                     <div>
                       <div
                         style={{ display: "flex", justifyContent: "center" }}
                       >
-                        <ButtonGroup aria-label="Basic example" style={{marginBottom: '5px'}}>
+                        <ButtonGroup
+                          aria-label="Basic example"
+                          style={{ marginBottom: "5px" }}
+                        >
                           <Button
                             disabled={pageNumber <= 1}
                             onClick={previousPage}
@@ -258,8 +341,7 @@ const FormPage = () => {
                         <Page pageNumber={pageNumber} />
                       </Document>
                     </div>
-                  }
-
+                  )}
                 </Tab>
                 <Tab eventKey="3" title="Description">
                   {formDetails.description === "" ? (
@@ -279,8 +361,9 @@ const FormPage = () => {
               </Tabs>
             </div>
           )}
-          <div style={{textAlign: 'right', marginBottom: '20px'}}>
-            Powered By <span style={{fontWeight: 'bold'}}>Form</span><span style={{fontWeight: 'bold', color: '#03ef62'}}>Easy</span>
+          <div style={{ textAlign: "right", marginBottom: "20px" }}>
+            Powered By <span style={{ fontWeight: "bold" }}>Form</span>
+            <span style={{ fontWeight: "bold", color: "#03ef62" }}>Easy</span>
           </div>
         </Content>
       </Layout>

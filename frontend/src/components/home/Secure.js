@@ -8,6 +8,7 @@ import Categories from "./Categories";
 import CategoryTemplate from "./Category/CategoryTemplate";
 import MyForms from "./MyForms";
 import Favorites from "./Favorites";
+import SearchBar from "../search/searchBar";
 const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
@@ -64,6 +65,9 @@ const Secure = () => {
     <>
       <style type="text/css">
         {`
+          .ant-layout{
+            min-height: 90vh;
+          }
           .ant-tabs-ink-bar {
             background-color: #03ef62;
           }
@@ -108,6 +112,9 @@ const Secure = () => {
             )}
           </Breadcrumb>
           <div className="site-layout-content">
+            {(activeTabKey === "1" && category === "") && <div style={{display: 'flex', justifyContent: 'center'}}>
+              <SearchBar />
+            </div>}
             <Tabs
               onChange={(activeKey) => {
                 setActiveTabkey(activeKey);
@@ -118,9 +125,7 @@ const Secure = () => {
                 {category === "" ? (
                   <Categories categorySelectHandler={onCategorySelect} />
                 ) : (
-                  <CategoryTemplate
-                    categoryName={category}
-                  />
+                  <CategoryTemplate categoryName={category} />
                 )}
               </TabPane>
               <TabPane tab="Favorites" key="2">

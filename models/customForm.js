@@ -4,6 +4,7 @@ const CustomFormSchema = new mongoose.Schema({
     reference:[
         {
             url: String,
+            publicId: String
         }
     ],
     formData:{

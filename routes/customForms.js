@@ -18,7 +18,7 @@ router.post("/", auth, upload.array("image"), async (req, res) => {
     form.isAccepting = visibility;
     form.formData = formData;
     if(req.files){
-      form.reference = req.files.map((f) => ({ url: f.path }));
+    form.reference = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
     }
     const result = await form.save();
     res.send({ success: true, message: "Form Created Successfully!", id: result._id});

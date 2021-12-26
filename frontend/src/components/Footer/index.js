@@ -1,19 +1,12 @@
 import PropTypes from "prop-types";
-
 import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
-
 import SuiBox from "../SuiBox";
 import SuiTypography from "../SuiTypography";
-
 import typography from "../../assets/theme/base/typography";
 
-function Footer({ aditya, aayush, rahul , links }) {
-
-
+function Footer({ aditya, aayush, rahul }) {
   const { size } = typography;
-
-  return (
+   return (
     <SuiBox
       width="100%"
       display="flex"
@@ -31,13 +24,7 @@ function Footer({ aditya, aayush, rahul , links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made with
-        <SuiBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
-          <Icon color="inherit" fontSize="inherit">
-            favorite
-          </Icon>
-        </SuiBox>
-        by
+        &copy; {new Date().getFullYear()}, made by
         <Link href={aditya.href} target="_blank">
           <SuiTypography variant="button" fontWeight="medium">
             &nbsp;{aditya.name}&nbsp;
@@ -74,7 +61,7 @@ function Footer({ aditya, aayush, rahul , links }) {
       >
       </SuiBox>
     </SuiBox>
-  );
+   );
 }
 
 Footer.defaultProps = {
