@@ -232,7 +232,7 @@ const CategoryTemplate = (props) => {
                         <Button
                           variant={"outline-dark"}
                           onClick={() => {
-                            history(`/`);
+                            history(`/profile/${form.userId}`);
                           }}
                           size="sm"
                         >

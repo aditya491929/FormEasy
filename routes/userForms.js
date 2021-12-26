@@ -25,6 +25,42 @@ router.get("/get/:id", async (req, res) => {
   }
 })
 
+router.get("/by/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    let user = await User.findById(userId).select('fname lname username email');
+    let forms = await CustomForm.find({ userId: userId }).select('formname isAccepting date');
+    const responseCounts = forms.map(async (e) => {
+      let count = await Response.find({ formid: e._id }).count();
+      return count;
+    })
+    let counts = await Promise.all(responseCounts).then(function (results) {
+      return results
+    });
+    const formData = forms.map((e, index) => {
+      return {
+        key: e._id,
+        id: e._id,
+        formname: e.formname,
+        date: e.date,
+        isAccepting: e.isAccepting,
+        responseCount: counts[index].toString()
+      };
+    });
+    const sendData = {
+      username: user.username,
+      fname: user.fname,
+      lname: user.lname,
+      email: user.email,
+      forms: formData,
+    };
+    res.send({ data: sendData, success: true, message: 'Forms fetched successfully!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ success: false, message: 'Something went wrong' });
+  }
+})
+
 router.post("/post/:id", async (req, res) => {
   try {
     const { id } = req.params;
