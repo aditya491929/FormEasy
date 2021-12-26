@@ -29,10 +29,10 @@ router.post("/post/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { userId, data } = req.body;
-    const response = new Response();
-    response.formid = id;
-    response.userid = userId;
-    response.response = data;
+    data.userid = userId;
+    data.formid = id;
+    const response = new Response(data);
+    console.log(response);
     const result = await response.save();
     res.send({ success: true, message: "Response Recorded Successfully!", id: result._id });
   } catch (error) {

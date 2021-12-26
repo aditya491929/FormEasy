@@ -246,7 +246,7 @@ const FormPage = () => {
                   alignItems: "center",
                 }}
               >
-                <CircularProgress style={{ color: "#03ef62" }} />
+                <CircularProgress style={{ color: "#03b862" }} />
               </div>
             </div>
           )}
@@ -344,26 +344,61 @@ const FormPage = () => {
                   )}
                 </Tab>
                 <Tab eventKey="3" title="Description">
-                  {formDetails.description === "" ? (
-                    <div>
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_DEFAULT}
-                        imageStyle={{
-                          height: 100,
-                        }}
-                        description={<span>Description Not Available!</span>}
-                      ></Empty>
-                    </div>
-                  ) : (
-                    <div>{formDetails.description}</div>
-                  )}
+                  <div style={{display:"flex",justifyContent: "center"}}>
+                    <div style={{
+                        minWidth: "75%",
+                        paddingTop: "2em",
+                        paddingBottom: "2em",
+                      }}>
+                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
+                          <div style={{fontSize:"14px",color:"#03b862"}}>
+                            Name
+                          </div>
+                          <div style={{"fontSize":"18px"}}>
+                            {formDetails.formname}
+                          </div>
+                        </div>
+                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
+                          <div style={{"fontSize":"14px","color":"#03b862"}}>
+                            By
+                          </div>
+                          <div style={{"fontSize":"18px"}}>
+                            {formDetails.username}
+                          </div>
+                        </div>
+                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
+                          <div style={{"fontSize":"14px","color":"#03b862"}}>
+                            Description
+                          </div>
+                          <div style={{"fontSize":"18px"}}>
+                            {formDetails.description}
+                          </div>
+                        </div>
+                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
+                          <div style={{"fontSize":"14px","color":"#03b862"}}>
+                            Category
+                          </div>
+                          <div style={{"fontSize":"18px"}}>
+                            {formDetails.formCategory}
+                          </div>
+                        </div>
+                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
+                          <div style={{"fontSize":"14px","color":"#03b862"}}>
+                            Created On
+                          </div>
+                          <div style={{"fontSize":"18px"}}>
+                            {formDetails.date.slice(0,10)}
+                          </div>
+                        </div>
+                      </div>
+                  </div>
                 </Tab>
               </Tabs>
             </div>
           )}
           <div style={{ textAlign: "right", marginBottom: "20px" }}>
             Powered By <span style={{ fontWeight: "bold" }}>Form</span>
-            <span style={{ fontWeight: "bold", color: "#03ef62" }}>Easy</span>
+            <span style={{ fontWeight: "bold", color: "#03b862" }}>Easy</span>
           </div>
         </Content>
       </Layout>
