@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Card from "@mui/material/Card";
-import SuiBox from '../SuiBox';
-=======
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -22,7 +7,6 @@ import { CalendarOutlined, IdcardOutlined } from "@ant-design/icons";
 import { Pill, EyeOffIcon, EyeOpenIcon, CrossIcon } from "evergreen-ui";
 import Grow from "@mui/material/Grow";
 const { Search } = Input;
->>>>>>> 1e103e52a8568008bb28677d515725e6e08c0611
 
 function SearchBar() {
   const [isLoading, setIsLoading] = useState(true);
