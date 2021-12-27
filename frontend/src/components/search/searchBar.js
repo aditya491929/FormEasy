@@ -9,6 +9,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Card from "@mui/material/Card";
+import SuiBox from '../SuiBox';
 
 function SearchBar() {
     const [state, setState] = React.useState({
@@ -51,6 +53,11 @@ function SearchBar() {
                     </ListItem>
                 ))}
             </List>
+            {/* <Card className="h-100">
+                <SuiBox pt={3} px={3}>
+
+                </SuiBox>
+            </Card> */}
         </Box>
     );
 
