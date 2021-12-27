@@ -48,15 +48,7 @@ const Content = () => {
   });
 
   const onGetStartedClick = () => {
-    if (userData.user) {
       history("/home");
-    } else {
-      addToast("Login/SignUp to Get Started!", {
-        appearance: "warning",
-        autoDismiss: true,
-        autoDismissTimeout: 2000,
-      });
-    }
   };
   const description =
     "FormEasy is a OneStop Solution to Creating, Managing and Collecting Form Response. Integrate Forms with super ease and let us handle assoicated overhead!";

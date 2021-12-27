@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Layout, Breadcrumb, Empty } from "antd";
+import { useNavigate, Link } from "react-router-dom";
+import { Layout, Breadcrumb, Empty, Divider } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
-import { Tabs, Tab, Button, ButtonGroup } from "react-bootstrap";
+import { Tabs, Tab, Button, ButtonGroup, Row, Col } from "react-bootstrap";
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRightOutlined, ChevronLeftOutlined } from "@mui/icons-material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Pane, Badge, Text } from "evergreen-ui";
 import FormRender from "./components/formRenderer";
 import axios from "axios";
 const { Content } = Layout;
@@ -28,7 +29,7 @@ const FormPage = () => {
   const [formData, setFormData] = useState("");
   const [formDetails, setFormDetails] = useState("");
   const [url, setUrl] = useState("");
-  const [isFavourite, setIsFavourite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [dimensions, setDimensions] = useState({
@@ -89,22 +90,24 @@ const FormPage = () => {
       setFormDetails(response.data.data);
       const user = JSON.parse(localStorage.getItem("user"));
       const token = localStorage.getItem("auth-token");
-      const isFavResponse = await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}forms/isfavourite`,
-        {
-          headers: {
-            "x-auth-token": token,
-          },
-          params: {
-            userId: user.id,
-            formId: formId,
-          },
+      if(user !== null){
+        const isFavResponse = await axios.get(
+          `${process.env.REACT_APP_API_ENDPOINT}forms/isfavourite`,
+          {
+            headers: {
+              "x-auth-token": token,
+            },
+            params: {
+              userId: user.id,
+              formId: formId,
+            },
+          }
+        );
+        if (isFavResponse.data.success) {
+          setIsFavourite(isFavResponse.data.data);
+        } else {
+          console.log("Something Went Wrong!");
         }
-      );
-      if (isFavResponse.data.success) {
-        setIsFavourite(isFavResponse.data.data);
-      } else {
-        console.log("Something Went Wrong!");
       }
       setLoading(false);
     } else {
@@ -211,20 +214,18 @@ const FormPage = () => {
               onClick={() => {
                 onClickHandler();
               }}
-              disabled={updating}
+              disabled={updating || (isFavourite === null)}
             >
-              {isFavourite ? 
-              (
+              {(isFavourite === true) ? (
                 <>
-                <HeartOutlined style={{verticalAlign: 'middle'}}/>
-                {" Remove From Favourite"} 
+                  <HeartOutlined style={{ verticalAlign: "middle" }} />
+                  {" Remove From Favourite"}
                 </>
-              )
-              : (
-              <>
-              <HeartFilled style={{verticalAlign: 'middle'}}/>
-              {" Add to favourite"}
-              </>
+              ) : (
+                <>
+                  <HeartFilled style={{ verticalAlign: "middle" }} />
+                  {" Add to favourite"}
+                </>
               )}
             </Button>
           </div>
@@ -344,61 +345,81 @@ const FormPage = () => {
                   )}
                 </Tab>
                 <Tab eventKey="3" title="Description">
-                  <div style={{display:"flex",justifyContent: "center"}}>
-                    <div style={{
-                        minWidth: "75%",
-                        paddingTop: "2em",
-                        paddingBottom: "2em",
-                      }}>
-                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
-                          <div style={{fontSize:"14px",color:"#03b862"}}>
-                            Name
-                          </div>
-                          <div style={{"fontSize":"18px"}}>
-                            {formDetails.formname}
-                          </div>
-                        </div>
-                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
-                          <div style={{"fontSize":"14px","color":"#03b862"}}>
-                            By
-                          </div>
-                          <div style={{"fontSize":"18px"}}>
-                            {formDetails.username}
-                          </div>
-                        </div>
-                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
-                          <div style={{"fontSize":"14px","color":"#03b862"}}>
-                            Description
-                          </div>
-                          <div style={{"fontSize":"18px"}}>
-                            {formDetails.description}
-                          </div>
-                        </div>
-                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
-                          <div style={{"fontSize":"14px","color":"#03b862"}}>
-                            Category
-                          </div>
-                          <div style={{"fontSize":"18px"}}>
-                            {formDetails.formCategory}
-                          </div>
-                        </div>
-                        <div style={{marginBottom:"1em"}} className="block-example border-bottom border-dark">
-                          <div style={{"fontSize":"14px","color":"#03b862"}}>
-                            Created On
-                          </div>
-                          <div style={{"fontSize":"18px"}}>
-                            {formDetails.date.slice(0,10)}
-                          </div>
-                        </div>
-                      </div>
+                  <div>
+                    <Row>
+                      <Col sm={6}>
+                        <Pane display="flex" alignItems="center">
+                          <Pane flexBasis={100}>
+                            <Badge color="green">FormName: </Badge>
+                          </Pane>
+                          <Pane>
+                            <Text>{formDetails.formname}</Text>
+                          </Pane>
+                        </Pane>
+                      </Col>
+                      <Col sm={6}>
+                        <Pane display="flex" alignItems="center">
+                          <Pane flexBasis={100}>
+                            <Badge color="green">Category: </Badge>
+                          </Pane>
+                          <Pane>
+                            <Text>{formDetails.formCategory}</Text>
+                          </Pane>
+                        </Pane>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={6}>
+                        <Pane display="flex" alignItems="center">
+                          <Pane flexBasis={100}>
+                            <Badge color="green">Created On: </Badge>
+                          </Pane>
+                          <Pane>
+                            <Text>{formDetails.date.slice(0, 10)}</Text>
+                          </Pane>
+                        </Pane>
+                      </Col>
+                      <Col sm={6}>
+                        <Pane display="flex" alignItems="center">
+                          <Pane flexBasis={100}>
+                            <Badge color="green">By: </Badge>
+                          </Pane>
+                          <Pane>
+                            <Text>{formDetails.username}</Text>
+                          </Pane>
+                        </Pane>
+                      </Col>
+                    </Row>
+                    <Divider />
+                    <Pane display="flex" alignItems="center">
+                      <Pane flexBasis={100}>
+                        <Badge color="yellow">Description: </Badge>
+                      </Pane>
+                      <Pane>
+                        <Text>{formDetails.description}</Text>
+                      </Pane>
+                    </Pane>
                   </div>
                 </Tab>
               </Tabs>
             </div>
           )}
-          <div style={{ textAlign: "right", marginBottom: "20px" }}>
-            Powered By <span style={{ fontWeight: "bold" }}>Form</span>
-            <span style={{ fontWeight: "bold", color: "#03b862" }}>Easy</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "20px",
+            }}
+          >
+            <div>
+              <Link to={`/profile/${formDetails.userId}`} style={{color: 'black'}}>
+                Any Form Grievance?
+              </Link>
+            </div>
+            <div>
+              Powered By <span style={{ fontWeight: "bold" }}>Form</span>
+              <span style={{ fontWeight: "bold", color: "#03b862" }}>Easy</span>
+            </div>
           </div>
         </Content>
       </Layout>

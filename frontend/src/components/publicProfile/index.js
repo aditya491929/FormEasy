@@ -23,7 +23,7 @@ function debounce(fn, ms) {
 }
 
 const PublicProfile = () => {
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -56,7 +56,7 @@ const PublicProfile = () => {
       } else {
         console.log("Something Went Wrong!");
       }
-      setIsloading(false);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -90,7 +90,7 @@ const PublicProfile = () => {
         >
           <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Profile</Breadcrumb.Item>
-            <Breadcrumb.Item>UserName</Breadcrumb.Item>
+            <Breadcrumb.Item>{userData.username}</Breadcrumb.Item>
           </Breadcrumb>
           <Row>
             <Col sm={12} md={5} lg={4}>

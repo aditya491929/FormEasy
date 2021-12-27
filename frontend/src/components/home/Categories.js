@@ -15,11 +15,7 @@ const Categories = (props) => {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}form/categories`,
-        {
-          headers: { "x-auth-token": userData.token },
-        }
-      );
+        `${process.env.REACT_APP_API_ENDPOINT}form/categories`);
       if (response.data) {
         setCategories(response.data);
       }
@@ -72,7 +68,6 @@ const Categories = (props) => {
                       alignItems: "center",
                     }}
                     onClick={() => {
-                      console.log(category['name']);
                       props.categorySelectHandler(category['name']);
                     }}
                   >

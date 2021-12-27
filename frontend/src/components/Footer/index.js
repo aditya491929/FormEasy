@@ -25,14 +25,14 @@ function Footer({ aditya, aayush, rahul }) {
         px={1.5}
       >
         &copy; {new Date().getFullYear()}, made by
-        <Link href={aditya.href} target="_blank">
-          <SuiTypography variant="button" fontWeight="medium">
-            &nbsp;{aditya.name}&nbsp;
-          </SuiTypography>
-        </Link>,
         <Link href={aayush.href} target="_blank">
           <SuiTypography variant="button" fontWeight="medium">
             &nbsp;{aayush.name}&nbsp;
+          </SuiTypography>
+        </Link>,
+        <Link href={aditya.href} target="_blank">
+          <SuiTypography variant="button" fontWeight="medium">
+            &nbsp;{aditya.name}&nbsp;
           </SuiTypography>
         </Link>,
         <Link href={rahul.href} target="_blank">
@@ -40,7 +40,6 @@ function Footer({ aditya, aayush, rahul }) {
             &nbsp;{rahul.name}&nbsp;
           </SuiTypography>
         </Link>
-        for a better web.
       </SuiBox>
       <SuiBox
         component="ul"
@@ -65,9 +64,9 @@ function Footer({ aditya, aayush, rahul }) {
 }
 
 Footer.defaultProps = {
-  aditya: { href: "https://www.github.com/aditya491929", name: "Aditya"},
-  aayush: { href: "https://www.github.com/aayushOz11", name: "Aayush"},
-  rahul: { href: "https://www.github.com/RahulPanchal-15", name: "Rahul" },
+  aditya: { href: "https://www.github.com/aditya491929", name: "Aditya Malwade"},
+  aayush: { href: "https://www.github.com/aayushOz11", name: "Aayush Malde"},
+  rahul: { href: "https://www.github.com/RahulPanchal-15", name: "Rahul Panchal" },
 };
 
 Footer.propTypes = {

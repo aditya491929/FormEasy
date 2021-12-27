@@ -3,6 +3,7 @@ const router = express.Router();
 const Response = require("../models/response");
 const auth = require('../middleware/auth');
 
+//Get Responses of a Form
 router.get('/get/:id', auth, async(req,res) => {
     try{
         const {id} = req.params;

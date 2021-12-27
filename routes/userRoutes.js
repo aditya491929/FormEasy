@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const auth = require('../middleware/auth');
 
+//SignUp new user
 router.post("/signup", async (req, res) => {
   if (!req.body.fname) {
     res.send({
@@ -42,6 +43,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+//Login User
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }).then((dbUser) => {
@@ -94,6 +96,7 @@ router.post("/login", (req, res) => {
   });
 });
 
+//Verify User
 router.post("/verifyToken", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
@@ -120,6 +123,7 @@ router.post("/verifyToken", async (req, res) => {
   }
 });
 
+//Get Current User Info
 router.get("/currentUser", auth, async (req, res) => {
   const userData = await User.findById(req.user).select('-password');
   res.send({
@@ -128,6 +132,7 @@ router.get("/currentUser", auth, async (req, res) => {
   });
 });
 
+//Logout User
 router.get('/logout', (req,res) => {
   const token = req.header("x-auth-token");
   const result = jwt.verify(token, process.env.JWT_SECRET);

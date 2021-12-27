@@ -10,6 +10,7 @@ const auth = require('../middleware/auth');
 const cloudinary = require('cloudinary');
 const mongoose = require('mongoose');
 
+//Render Form
 router.get("/get/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -25,6 +26,27 @@ router.get("/get/:id", async (req, res) => {
   }
 })
 
+//Post Form Response
+router.post("/post/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId, data } = req.body;
+    if(userId === undefined){
+      data.userid = "UnAuth User"
+    }else{
+      data.userid = userId;
+    }
+    data.formid = id;
+    const response = new Response(data);
+    const result = await response.save();
+    res.send({ success: true, message: "Response Recorded Successfully!", id: result._id });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ success: false, message: 'Something went wrong!' })
+  }
+})
+
+//Users Public Profile
 router.get("/by/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -61,22 +83,7 @@ router.get("/by/:userId", async (req, res) => {
   }
 })
 
-router.post("/post/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userId, data } = req.body;
-    data.userid = userId;
-    data.formid = id;
-    const response = new Response(data);
-    console.log(response);
-    const result = await response.save();
-    res.send({ success: true, message: "Response Recorded Successfully!", id: result._id });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ success: false, message: 'Something went wrong!' })
-  }
-})
-
+//Change Form Response Acceptance Status
 router.put("/put/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,6 +96,7 @@ router.put("/put/:id", auth, async (req, res) => {
   }
 });
 
+//Delete Form
 router.delete("/delete/:id", auth, async (req,res) => {
   try{
     const { id } = req.params;
@@ -105,6 +113,7 @@ router.delete("/delete/:id", auth, async (req,res) => {
   }
 })
 
+//Get MyForms
 router.get("/myforms", auth, async (req, res) => {
   try {
     const { userId } = req.query;
@@ -133,6 +142,7 @@ router.get("/myforms", auth, async (req, res) => {
   }
 })
 
+//Update MyFavourites
 router.put("/favourites", auth, async (req, res) => {
   try {
     const { formId, userId } = req.body;
@@ -149,17 +159,18 @@ router.put("/favourites", auth, async (req, res) => {
   }
 });
 
+//Get MyFavourites
 router.get("/favourites", auth, async (req, res) => {
   try {
     const { userId } = req.query;
     let fav = await User.findById( userId ).select('favourites');
-    console.log(fav);
     res.send({ data: fav, success: true, message: "Favourites fetched successfully!"});
   } catch (err) {
     res.status(500).send({ success: false, message: "Something went wrong"});
   }
 });
 
+//Check IsFavourite
 router.get("/isfavourite", auth, async(req,res) => {
   try {
     const { userId,formId } = req.query;
@@ -174,6 +185,7 @@ router.get("/isfavourite", auth, async(req,res) => {
   }
 })
 
+//Upload a Form Reference
 router.post("/upload", auth, upload.array("image"), async (req, res) => {
   try {
     const { userId, username, formName, formCategory, description } = req.body;

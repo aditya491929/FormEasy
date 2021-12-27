@@ -42,7 +42,7 @@ function ProfileInfo() {
           >
             <Avatar
               name={`${userData.fname} ${userData.lname}`}
-              size={80}
+              size={100}
               style={{ marginBottom: "10px" }}
               color="green"
             />

@@ -23,11 +23,7 @@ const CategoryTemplate = (props) => {
     const token = localStorage.getItem("auth-token");
     async function fetchData() {
       const result = await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}form/categories/${props.categoryName}`,
-        {
-          headers: { "x-auth-token": token },
-        }
-      );
+        `${process.env.REACT_APP_API_ENDPOINT}form/categories/${props.categoryName}`);
       if (result.data.success) {
         setBanner(result.data.card);
         setCategoryForms(result.data.data);

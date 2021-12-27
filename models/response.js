@@ -6,7 +6,7 @@ const ResponseSchema = new mongoose.Schema({
         default: '',
     },
     userid: {
-        type: mongoose.Schema.ObjectId,
+        type: String,
         default: '',
     },
     date: {
