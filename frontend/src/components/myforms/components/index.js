@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import SuiBox from "../../SuiBox";
 import SuiTypography from "../../SuiTypography";
-import { Table, Space, Switch, Button, Tooltip } from "antd";
+import { Table, Space, Switch, Button, Tooltip, Popover } from "antd";
 import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useToasts } from "react-toast-notifications";
 import csvDownload from 'json-to-csv-export'
+import QRCode from "react-qr-code";
 
 const MyFormsTable = () => {
   const [data, setData] = useState([]);
@@ -164,6 +165,11 @@ const MyFormsTable = () => {
       title: "FormName",
       dataIndex: "formname",
       key: "formname",
+      render: (formname, record) => (
+        <Popover content={<QRCode value={`${process.env.REACT_APP_API_ENDPOINT}form/${record.key}`} />} title="QR Code">
+          {formname}
+        </Popover>
+      ),
     },
     {
       title: "Created On",

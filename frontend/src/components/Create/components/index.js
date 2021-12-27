@@ -182,7 +182,7 @@ const DragDrop = () => {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Link to={`/form/${formid}`}>
-          <QRCode value={`http://localhost:3000/form/${formid}`} />
+          <QRCode value={`${process.env.REACT_APP_API_ENDPOINT}form/${formid}`} />
         </Link>
       </CornerDialog>
       <SuiTypography variant="h6" fontWeight="medium">
