@@ -23,6 +23,9 @@ The following steps will help you in running this project in your local PC.
 8. The above steps would install all the necessary dependencies that the website uses.
 9. Now to run the website locally, use command: npm run dev. This will open your project in any browser. 
 
+## Deploy
+refer to lonk: https://coursework.vschool.io/deploying-mern-app-to-heroku/
+
 ## Authors
 Aditya Malwade,
 Rahul Panchal,
