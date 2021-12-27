@@ -31,6 +31,7 @@ app.use(cors({
     optionsSuccessStatus:200,
 }));
 app.use(passport.initialize());
+app.use(express.static(path.join(__dirname, "frontend", "build")))
 
 
 app.use('/users', userRouter);
@@ -44,9 +45,9 @@ app.get('/', (req,res) => {
     res.send('HOME');
 })
 
-app.get('*', (req,res) => {
-    res.send('Error 404!');
-})
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+});
 
 app.listen(PORT, () => {
     console.log(`Serving on PORT ${PORT}`);

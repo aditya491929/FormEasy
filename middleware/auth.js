@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET || "ThisIsSomeSecretForLocalDevelopment";
 
 const auth = (req, res, next) => {
     try {
@@ -8,7 +9,7 @@ const auth = (req, res, next) => {
           message: "No Token Found!",
         });
       }
-      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      const verified = jwt.verify(token, secret);
       if (!verified) {
         return res.status(500).send({
           message: "Token Verification Failed!",
