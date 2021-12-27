@@ -27,7 +27,7 @@ The following steps will help you in running this project in your local PC.
 Aditya Malwade
 Rahul Panchal
 Aayush Malde
-Get details of the creators here: https://github.com/aditya491929/FormEasy/
+Get details of all the creators here: https://github.com/aditya491929/FormEasy/
 
 ## Acknowledgements
 1. www.creative-tim.com
