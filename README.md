@@ -24,9 +24,9 @@ The following steps will help you in running this project in your local PC.
 9. Now to run the website locally, use command: npm run dev. This will open your project in any browser. 
 
 ## Authors
-Aditya Malwade
-Rahul Panchal
-Aayush Malde
+Aditya Malwade,
+Rahul Panchal,
+Aayush Malde,
 Get details of all the creators here: https://github.com/aditya491929/FormEasy/
 
 ## Acknowledgements
