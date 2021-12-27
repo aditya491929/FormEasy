@@ -391,7 +391,7 @@ const FormPage = () => {
                       </Col>
                     </Row>
                     <Divider />
-                    <Pane style={{display: 'flex', flexDirection: 'row', alignItems: 'flex-start'}}>
+                    <Pane style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                       <Pane flexBasis={30}>
                         <Badge color="yellow">Description: </Badge>
                       </Pane>
