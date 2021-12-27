@@ -1,5 +1,15 @@
 # FormEasy
-This project is all about dealing with Forms. Users can upload, create, search different forms of thier organization. There is a functionality wherein a user can scan a QR code and is redirected to a sample form associated with it. This project includes basic CRUD operations with very user friendly UI developed using MERN stack. 
+This project is all about dealing with Forms. 
+Users can upload, create, search different forms of thier organization. 
+There is a functionality wherein a user can scan a QR code and is redirected to a sample form associated with it. 
+This project includes basic CRUD operations with very user friendly UI developed using MERN stack. 
+
+## Prerequisites
+1. Express.
+2. NodeJS
+3. Mongo DB
+4. ReactJS
+5. Code Editor (example: VS code)
 
 ## Getting Started
 The following steps will help you in running this project in your local PC.
@@ -12,3 +22,14 @@ The following steps will help you in running this project in your local PC.
 7. Again comeback to the Formeasy folder using command: cd..
 8. The above steps would install all the necessary dependencies that the website uses.
 9. Now to run the website locally, use command: npm run dev. This will open your project in any browser. 
+
+##Authors
+Aditya Malwade
+Rahul Panchal
+Aayush Malde
+Get details of the creators here: https://github.com/aditya491929/FormEasy/
+
+##Acknowledgements
+1. www.creative-tim.com
+2. www.cloudinary.com.
+
