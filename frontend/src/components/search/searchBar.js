@@ -64,6 +64,14 @@ function SearchBar() {
           .ant-input-affix-wrapper:focus{
             border-color: #03ef62 !important;
           }
+          .card-text{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+                    line-clamp: 2; 
+            -webkit-box-orient: vertical;
+          }
         `}
       </style>
       <Search
