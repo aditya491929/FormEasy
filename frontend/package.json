@@ -31,11 +31,13 @@
     "react-chartjs-2": "3.0.4",
     "react-dom": "^17.0.2",
     "react-highlight-words": "^0.17.0",
+    "react-lottie-player": "^1.4.1",
     "react-pdf": "^5.6.0",
     "react-qr-code": "^2.0.3",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-toast-notifications": "^2.5.1",
+    "simple-react-footer": "^1.0.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

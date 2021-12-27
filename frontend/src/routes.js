@@ -1,13 +1,14 @@
-import Shop from "./Icons/Shop";
 import Document from "./Icons/Document";
+import Settings from "./Icons/Settings";
 
 const routes = [
+  { type: "title", title: "Profile", key: "my-profile" },
   {
-    type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
+    type:"collapse",
+    name: "Profile",
+    key:"dashboard",
     route: "/dashboard",
-    icon: <Shop size="12px" />,
+    icon: <Settings size="12px" />,
     noCollapse: true,
   },
   {
@@ -15,7 +16,7 @@ const routes = [
     name: "My Forms",
     key: "myforms",
     route: "/dashboard/myforms",
-    icon: <Shop size="12px" />,
+    icon: <Document size="12px" />,
     noCollapse: true,
   },
 
@@ -33,15 +34,6 @@ const routes = [
     name: "Upload Form",
     key: "upload",
     route: "/dashboard/upload",
-    icon: <Document size="12px" />,
-    noCollapse: true,
-  },
-  { type: "title", title: "Profile", key: "my-profile" },
-  {
-    type:"collapse",
-    name: "Profile",
-    key:"profile",
-    route: "/dashboard/profile",
     icon: <Document size="12px" />,
     noCollapse: true,
   },

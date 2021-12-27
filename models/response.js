@@ -6,18 +6,14 @@ const ResponseSchema = new mongoose.Schema({
         default: '',
     },
     userid: {
-        type: mongoose.Schema.ObjectId,
-        default: '',
-    },
-    response: {
         type: String,
-        default: ''
+        default: '',
     },
     date: {
         type: Date,
         default: Date.now(),
     }
-});
+},{strict : false});
 
 const Response = mongoose.model('Response', ResponseSchema);
 module.exports = Response

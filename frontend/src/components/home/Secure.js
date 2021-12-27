@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
+import React, { useEffect, useState } from "react";
 import MainHeader from "../navbar/MainHeader";
 import { Layout, Breadcrumb, Tabs } from "antd";
 import "./Secure.css";
@@ -9,7 +7,6 @@ import CategoryTemplate from "./Category/CategoryTemplate";
 import MyForms from "./MyForms";
 import Favorites from "./Favorites";
 import SearchBar from "../search/searchBar";
-
 const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
@@ -25,8 +22,7 @@ function debounce(fn, ms) {
 }
 
 const Secure = () => {
-  const history = useNavigate();
-  const { userData } = useContext(UserContext);
+  const [userData, setUserData] = useState();
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -48,11 +44,13 @@ const Secure = () => {
   });
 
   useEffect(() => {
-    console.log(userData);
-    if (!userData.user) {
-      history("/");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      setUserData(user);
+    } else {
+      setUserData(null);
     }
-  }, [userData, history]);
+  }, []);
 
   const onCategorySelect = (categoryName) => {
     setCategory(categoryName);
@@ -66,6 +64,9 @@ const Secure = () => {
     <>
       <style type="text/css">
         {`
+          .ant-layout{
+            min-height: 90vh;
+          }
           .ant-tabs-ink-bar {
             background-color: #03ef62;
           }
@@ -109,8 +110,12 @@ const Secure = () => {
               <Breadcrumb.Item>Favorites</Breadcrumb.Item>
             )}
           </Breadcrumb>
-          <SearchBar />
           <div className="site-layout-content">
+            {activeTabKey === "1" && category === "" && (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <SearchBar />
+              </div>
+            )}
             <Tabs
               onChange={(activeKey) => {
                 setActiveTabkey(activeKey);
@@ -121,17 +126,19 @@ const Secure = () => {
                 {category === "" ? (
                   <Categories categorySelectHandler={onCategorySelect} />
                 ) : (
-                  <CategoryTemplate
-                    categoryName={category}
-                  />
+                  <CategoryTemplate categoryName={category} />
                 )}
               </TabPane>
-              <TabPane tab="Favorites" key="2">
-                <Favorites />
-              </TabPane>
-              <TabPane tab="My Forms" key="3">
-                <MyForms />
-              </TabPane>
+              {userData !== null && (
+                <>
+                  <TabPane tab="Favorites" key="2">
+                    <Favorites />
+                  </TabPane>
+                  <TabPane tab="My Forms" key="3">
+                    <MyForms />
+                  </TabPane>
+                </>
+              )}
             </Tabs>
           </div>
         </Content>

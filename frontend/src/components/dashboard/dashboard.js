@@ -1,44 +1,15 @@
-// @mui material components
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
-import React, { useContext, useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom';
-import { UserContext } from "../../context/UserContext";
-import axios from "axios";
-import { useNavController, setMiniSidenav, setOpenConfigurator } from "../../context/NavContext";
-import Sidenav from "../Sidenav";
-import brand from "../../assets/logo.png";
-import routes from "../../routes";
-
-// Soft UI Dashboard React components
+import React from "react";
 import SuiBox from "../SuiBox";
-import SuiTypography from "../SuiTypography";
-
-// Soft UI Dashboard React example components
 import DashboardLayout from "../LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../Navbars/DashboardNavbar";
 import Footer from "../Footer";
 import MiniStatisticsCard from "../Cards/StatisticsCards/MiniStatisticsCard";
-import ReportsBarChart from "../Charts/BarCharts/ReportsBarChart";
-import GradientLineChart from "../Charts/LineCharts/GradientLineChart";
-
-// Soft UI Dashboard React base styles
-import typography from "../../assets/theme/base/typography";
-
-// Dashboard layout components
 import BuildByDevelopers from "./components/BuildByDevelopers";
-import WorkWithTheRockets from "./components/WorkWithTheRockets";
 import Projects from "./components/Projects";
 import OrderOverview from "./components/OrderOverview";
 
-// Data
-import reportsBarChartData from "./data/reportsBarChartData";
-import gradientLineChartData from "./data/gradientLineChartData";
-
 function Dashboard() {
-  const { size } = typography;
-  const { chart, items } = reportsBarChartData;
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -88,48 +59,10 @@ function Dashboard() {
               <BuildByDevelopers />
             </Grid>
             <Grid item xs={12} lg={6}>
-              {/* <WorkWithTheRockets /> */}
               <BuildByDevelopers />
-
             </Grid>
           </Grid>
         </SuiBox>
-        {/* <SuiBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={5}>
-              <ReportsBarChart
-                title="active users"
-                description={
-                  <>
-                    (<strong>+23%</strong>) than last week
-                  </>
-                }
-                chart={chart}
-                items={items}
-              />
-            </Grid>
-            <Grid item xs={12} lg={7}>
-              <GradientLineChart
-                title="Sales Overview"
-                description={
-                  <SuiBox display="flex" alignItems="center">
-                    <SuiBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                      <Icon className="font-bold">arrow_upward</Icon>
-                    </SuiBox>
-                    <SuiTypography variant="button" color="text" fontWeight="medium">
-                      4% more{" "}
-                      <SuiTypography variant="button" color="text" fontWeight="regular">
-                        in 2021
-                      </SuiTypography>
-                    </SuiTypography>
-                  </SuiBox>
-                }
-                height="20.25rem"
-                chart={gradientLineChartData}
-              />
-            </Grid>
-          </Grid>
-        </SuiBox> */}
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
             <Projects />

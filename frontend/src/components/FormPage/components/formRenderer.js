@@ -60,7 +60,7 @@ const FormRenderer = ( {formData, formId} ) => {
     try{
       setIsSubmitting(true);
       NProgress.start();
-      const response = JSON.stringify(extractResponses(($(renderRef.current).formRender("userData"))))
+      const response = extractResponses(($(renderRef.current).formRender("userData")));
       const user = JSON.parse(localStorage.getItem('user'))
       let data = {}
       if(user){
@@ -73,7 +73,7 @@ const FormRenderer = ( {formData, formId} ) => {
           "data": response
         }
       }
-      console.log(formId);
+      console.log(data);
       const result = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}forms/post/${formId}`, data);
       if(result.data.success){
         addToast(result.data.message, { appearance: 'success', autoDismiss: true, autoDismissTimeout: 2000 })

@@ -14,7 +14,7 @@ import SuiTypography from "../../SuiTypography";
 // custom styles for the NotificationItem
 import { menuItem, menuImage } from "./styles";
 
-const NotificationItem = forwardRef(({ color, image, title, ...rest }, ref) => (
+const NotificationItem = forwardRef(({ color, image, title, icon, ...rest }, ref) => (
   <MenuItem {...rest} ref={ref} sx={(theme) => menuItem(theme)}>
     <SuiBox
       width="2.25rem"
@@ -25,7 +25,7 @@ const NotificationItem = forwardRef(({ color, image, title, ...rest }, ref) => (
       borderRadius="lg"
       sx={(theme) => menuImage(theme, { color })}
     >
-      <Icon style={{"color":"white"}}>logout</Icon>
+      <Icon style={{"color":"white"}}>{icon}</Icon>
     </SuiBox>
     <SuiBox>
       <SuiTypography variant="button" textTransform="capitalize" fontWeight="regular">

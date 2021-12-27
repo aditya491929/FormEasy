@@ -32,11 +32,13 @@ app.use(cors({
 }));
 app.use(passport.initialize());
 
+
 app.use('/users', userRouter);
 app.use('/forms', userFormRouter);
 app.use('/form', formCategoryRouter);
 app.use('/forms/create', customFormRouter);
 app.use('/responses', responseRouter);
+
 
 app.get('/', (req,res) => {
     res.send('HOME');
