@@ -50,6 +50,8 @@ The following steps will help you in running this project in your local PC.
 1. Using Optical Charachter Recognition(OCR) for form text translation.
 2. Form Builder with more features.
 3. Payment Gateway Integration.
+4. Data Analysis on form responses.
+5. Verification of Legitimate Orgamizations
 
 
 ## References
