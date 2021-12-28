@@ -22,7 +22,7 @@ The following steps will help you in running this project in your local PC.
 
 ## Technologies
 1. MERN stack. 
-2. Cloudinary (file upload).
+2. Cloudinary (file storage).
 3. Mongo Atlas.
 4. Authentication using JWT token.
 5. Heroku for deployment.
@@ -48,11 +48,11 @@ The following steps will help you in running this project in your local PC.
 
 ## Future Scope
 1. Using Optical Charachter Recognition(OCR) for form text translation.
-2. Form Builder with more fetaures.
+2. Form Builder with more features.
 3. Payment Gateway Integration.
 
 
 ## References
 1. www.cloudinary.com.
-2. Refer to link: https://coursework.vschool.io/deploying-mern-app-to-heroku/
+2. https://coursework.vschool.io/deploying-mern-app-to-heroku/
 
